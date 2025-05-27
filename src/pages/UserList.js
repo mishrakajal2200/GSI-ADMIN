@@ -8,7 +8,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await axios.get('/api/users');
+        const res = await axios.get('https://gsi-backend-1.onrender.com/api/auth');
         setUsers(res.data);
       } catch (err) {
         console.error('Error fetching users:', err);
