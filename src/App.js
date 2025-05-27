@@ -60,13 +60,15 @@ function App() {
               <EditProduct />
             </AdminRoute>
           } />
-      </Routes>
 
-      <Route path="/admin/analytics" element={
+            <Route path="/admin/analytics" element={
             <AdminRoute>
               <Analytics />
             </AdminRoute>
           } />
+      </Routes>
+
+    
     </Router>
   );
 }
