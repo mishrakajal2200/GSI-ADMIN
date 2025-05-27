@@ -256,7 +256,7 @@ function Dashboard() {
               <DollarSign className="w-14 h-14 text-green-500 opacity-50" />
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-              <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between">
+              
             <div>
               <p className="text-sm text-gray-500 mb-1">New Orders</p>
               <h3 className="text-3xl font-extrabold text-gray-900">
@@ -264,7 +264,7 @@ function Dashboard() {
               </h3>
             </div>
             <Package className="w-14 h-14 text-blue-500 opacity-50" />
-          </div>
+         
               <Package className="w-14 h-14 text-blue-500 opacity-50" />
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
