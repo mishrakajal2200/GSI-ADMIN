@@ -250,13 +250,14 @@ const ProductList = () => {
         <ul className="space-y-3">
           {products.map((product) => (
             <li key={product._id} className="bg-white p-4 rounded shadow flex items-center gap-4">
-              {product.image && (
-                <img
-                  src={`https://gsi-backend-1.onrender.com/${product.image}`}
-                  alt={product.name}
-                  className="w-20 h-20 object-cover rounded"
-                />
-              )}
+             {product.image && (
+  <img
+    src={`https://gsi-backend-1.onrender.com/${product.image}`}
+    alt={product.name}
+    className="w-20 h-20 object-cover rounded"
+  />
+)}
+
               <div className="flex-1">
                 <div className="font-semibold">{product.name}</div>
                 <div className="text-sm text-gray-600">{product.brand}</div>
