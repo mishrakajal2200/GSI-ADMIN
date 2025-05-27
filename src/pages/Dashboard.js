@@ -92,7 +92,7 @@ function Dashboard() {
     const fetchOrdersCount = async () => {
       try {
         const { data } = await axios.get(
-          'https://gsi-backend-1.onrender.com/api/orders/count'
+          'https://gsi-backend-1.onrender.com/api/orders'
         );
         setNewOrdersCount(data.count);
       } catch (err) {
