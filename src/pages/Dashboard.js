@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React,{useState,useEffect } from 'react';
+import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Home, BarChart2, ShoppingCart, Users, Settings, Search, Bell, User, ChevronDown, DollarSign, Package, CreditCard, Activity, Menu, LogOut, MessageSquare, Upload, Download, Mail, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -48,6 +49,7 @@ const recentActivities = [
 ];
 
 function Dashboard() {
+  const [newOrdersCount, setNewOrdersCount] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false); // Starts closed
   const [isUserDropdownOpen, setIsUserDropdownOpen] = React.useState(false);
 
@@ -83,6 +85,23 @@ function Dashboard() {
     console.log('Import button clicked!');
     alert('Import functionality would be implemented here!');
   };
+
+
+  useEffect(() => {
+    // fetch total orders count on mount
+    const fetchOrdersCount = async () => {
+      try {
+        const { data } = await axios.get(
+          'https://gsi-backend-1.onrender.com/api/orders/count'
+        );
+        setNewOrdersCount(data.count);
+      } catch (err) {
+        console.error('Failed to load orders count:', err);
+        setNewOrdersCount(0);
+      }
+    };
+    fetchOrdersCount();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
@@ -237,10 +256,15 @@ function Dashboard() {
               <DollarSign className="w-14 h-14 text-green-500 opacity-50" />
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-              <div>
-                <p className="text-sm text-gray-500 mb-1">New Orders</p>
-                <h3 className="text-3xl font-extrabold text-gray-900">256</h3>
-              </div>
+              <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-500 mb-1">New Orders</p>
+              <h3 className="text-3xl font-extrabold text-gray-900">
+                {newOrdersCount !== null ? newOrdersCount : '—'}
+              </h3>
+            </div>
+            <Package className="w-14 h-14 text-blue-500 opacity-50" />
+          </div>
               <Package className="w-14 h-14 text-blue-500 opacity-50" />
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">

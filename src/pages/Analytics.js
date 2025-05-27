@@ -22,7 +22,7 @@ const Analytics = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-purple-400 to-pink-400 p-6 flex flex-col items-center justify-center">
       <h2 className="text-4xl text-white font-bold mb-10 text-center drop-shadow-lg">
         Admin Analytics Dashboard
       </h2>
