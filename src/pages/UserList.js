@@ -32,28 +32,28 @@ const UserList = () => {
     );
   }, [searchQuery, users]);
 
-  const handleRoleChange = async (userId, newRole) => {
+  const handleRoleChange = async (id, newRole) => {
     try {
-      await axios.put(`https://gsi-backend-1.onrender.com/api/auth/${userId}/role`, { role: newRole });
-      setUsers(users.map(user => (user._id === userId ? { ...user, role: newRole } : user)));
+      await axios.put(`https://gsi-backend-1.onrender.com/api/auth/${id}/role`, { role: newRole });
+      setUsers(users.map(user => (user._id === id ? { ...user, role: newRole } : user)));
     } catch (err) {
       console.error('Failed to update role:', err);
     }
   };
 
-  const handleDelete = async (userId) => {
+  const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/${userId}`);
-      setUsers(users.filter(user => user._id !== userId));
+      await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/${id}`);
+      setUsers(users.filter(user => user._id !== id));
     } catch (err) {
       console.error('Error deleting user:', err);
     }
   };
 
-  const handleBlockToggle = async (userId, isBlocked) => {
+  const handleBlockToggle = async (id, isBlocked) => {
     try {
-      await axios.put(`https://gsi-backend-1.onrender.com/api/auth/${userId}/block`, { isBlocked: !isBlocked });
-      setUsers(users.map(user => (user._id === userId ? { ...user, isBlocked: !isBlocked } : user)));
+      await axios.put(`https://gsi-backend-1.onrender.com/api/auth/${id}/block`, { isBlocked: !isBlocked });
+      setUsers(users.map(user => (user._id === id ? { ...user, isBlocked: !isBlocked } : user)));
     } catch (err) {
       console.error('Error toggling block:', err);
     }
