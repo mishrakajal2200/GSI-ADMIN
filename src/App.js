@@ -35,6 +35,8 @@ import ProductList from './pages/ProductList';
 import UserList from './pages/UserList';
 
 import AdminSubscribers from './pages/AdminSubscribers.js';
+import CreateProduct from './pages/CreateProduct.js';
+import EditProduct from './pages/EditProduct.js';
 
 function App() {
   return (
@@ -75,6 +77,16 @@ function App() {
             </AdminRoute>
           }
         />
+        <Route path="/admin/products/create" element={
+            <AdminRoute>
+              <CreateProduct/>
+            </AdminRoute>
+          }/>
+        <Route path="/admin/products/:id/edit"  element={
+            <AdminRoute>
+              <EditProduct />
+            </AdminRoute>
+          } />
       </Routes>
     </Router>
   );
