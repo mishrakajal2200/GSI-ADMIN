@@ -106,7 +106,7 @@ function Dashboard() {
             Dashboard
           </Link>
           <Link
-            to="/admin/anlytics"
+            to="/admin/analytics"
             className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
           >
             <BarChart2 className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
