@@ -222,7 +222,7 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://gsi-backend-1.onrender.com/api/auth/admin/login",
+        "https://gsi-backend-1.onrender.com/api/auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
