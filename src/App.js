@@ -1,31 +1,3 @@
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import AdminRoute from './routes/AdminRoutes.jsx';
-// import Dashboard from './pages/Dashboard.js';
-// import Login from './pages/Login.jsx';
-
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//        <Route path="/" element={<Login />} />
-//         {/* Admin routes */}
-//         <Route
-//           path="/dashboard"
-//           element={
-//             <AdminRoute>
-//               <Dashboard />
-//             </AdminRoute>
-//           }
-//         />
-//         {/* Other user routes */}
-//       </Routes>
-//     </Router>
-//   );
-// }
-
-// export default App;
-
-
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdminRoute from './routes/AdminRoutes.jsx';
