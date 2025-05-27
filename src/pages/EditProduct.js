@@ -21,7 +21,7 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`https://gsi-backend-1.onrender.com/api/products/${id}`);
+        const res = await axios.get(`https://gsi-backend-1.onrender.com/api/products/${product._id}`);
         const data = res.data;
         setProduct(data);
 
@@ -41,7 +41,7 @@ const EditProduct = () => {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [product._id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
