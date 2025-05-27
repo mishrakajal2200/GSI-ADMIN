@@ -62,7 +62,7 @@ function App() {
           }
         />
         <Route
-          path="/admin/users"
+          path="/admin/auth"
           element={
             <AdminRoute>
               <UserList />
