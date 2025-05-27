@@ -147,7 +147,7 @@ const handleLogin = async (e) => {
     localStorage.setItem("isAdminAuthenticated", "true");
 
     toast.success("Login successful!");
-    setTimeout(() => navigate("/dashboard"), 1500);
+    setTimeout(() => navigate("/admin/dashboard"), 1500);
 
   } catch (error) {
     console.error("Error:", error);
