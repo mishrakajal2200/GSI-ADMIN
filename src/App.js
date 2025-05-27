@@ -9,6 +9,7 @@ import UserList from './pages/UserList';
 import AdminSubscribers from './pages/AdminSubscribers.js';
 import CreateProduct from './pages/CreateProduct.js';
 import EditProduct from './pages/EditProduct.js';
+import Analytics from './pages/Analytics.js';
 
 function App() {
   return (
@@ -60,6 +61,12 @@ function App() {
             </AdminRoute>
           } />
       </Routes>
+
+      <Route path="/admin/analytics" element={
+            <AdminRoute>
+              <Analytics />
+            </AdminRoute>
+          } />
     </Router>
   );
 }
