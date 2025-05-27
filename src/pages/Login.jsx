@@ -126,72 +126,34 @@ const Login = () => {
   //     toast.error("Something went wrong. Try again later.");
   //   }
   // };
-// const handleLogin = async (e) => {
-//   e.preventDefault();
-
-//   try {
-//     const response = await fetch("http://localhost:5000/api/auth/admin/login", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ email, password }),
-//     });
-
-//     const data = await response.json();
-
-//     if (!response.ok) {
-//       toast.error(data.message || "Login failed");
-//       return;
-//     }
-
-//     // ✅ Set login flag
-//     localStorage.setItem("isAdminAuthenticated", "true");
-
-//     toast.success("Login successful!");
-//     setTimeout(() => navigate("/admin/dashboard"), 1500);
-
-//   } catch (error) {
-//     console.error("Error:", error);
-//     toast.error("Something went wrong. Try again later.");
-//   }
-// };
 const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/admin/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-      const data = await response.json();
-      console.log("🛑 login response data:", data);
+  e.preventDefault();
 
-      if (!response.ok) {
-        toast.error(data.message || "Login failed");
-        return;
-      }
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-      // try both common token keys:
-      const token = data.token || data.accessToken;
-      if (!token) {
-        console.error("❌ No token in login response!");
-        toast.error("Login succeeded but no token received.");
-        return;
-      }
+    const data = await response.json();
 
-      localStorage.setItem("adminToken", token);
-      // you probably no longer need isAdminAuthenticated:
-      localStorage.setItem("isAdminAuthenticated", "true");
-
-      toast.success("Login successful!");
-      setTimeout(() => navigate("/admin/dashboard"), 800);
-    } catch (err) {
-      console.error("Login error:", err);
-      toast.error("Something went wrong. Try again later.");
+    if (!response.ok) {
+      toast.error(data.message || "Login failed");
+      return;
     }
-  };
+
+    // ✅ Set login flag
+    localStorage.setItem("isAdminAuthenticated", "true");
+
+    toast.success("Login successful!");
+    setTimeout(() => navigate("/dashboard"), 1500);
+
+  } catch (error) {
+    console.error("Error:", error);
+    toast.error("Something went wrong. Try again later.");
+  }
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-blue-600">
