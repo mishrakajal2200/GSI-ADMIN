@@ -6,9 +6,13 @@ import cors from 'cors';
 import User from './model/User.js';
 import bcrypt from 'bcryptjs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 // Middleware
 app.use(cors());
