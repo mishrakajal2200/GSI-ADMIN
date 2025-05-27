@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js';
 import cors from 'cors';
 import User from './model/User.js';
 import bcrypt from 'bcryptjs';
+import path from 'path';
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,9 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', authRoutes);
+
+
+app.use('/image', express.static(path.join(__dirname, 'image')));
 
 const createAdminUser = async () => {
   try {
