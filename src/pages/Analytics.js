@@ -22,16 +22,20 @@ const Analytics = () => {
   }, []);
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-6">Admin Analytics</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-xl font-semibold">Total Users</h3>
-          <p className="text-4xl mt-2 text-blue-600">{totalUsers}</p>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6 flex flex-col items-center justify-center">
+      <h2 className="text-4xl text-white font-bold mb-10 text-center drop-shadow-lg">
+        Admin Analytics Dashboard
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl text-center transition-transform hover:scale-105 hover:shadow-2xl">
+          <h3 className="text-xl font-semibold text-white mb-2">Total Users</h3>
+          <p className="text-5xl font-bold text-blue-200">{totalUsers}</p>
         </div>
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-xl font-semibold">Total Admins</h3>
-          <p className="text-4xl mt-2 text-green-600">{totalAdmins}</p>
+
+        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 shadow-xl text-center transition-transform hover:scale-105 hover:shadow-2xl">
+          <h3 className="text-xl font-semibold text-white mb-2">Total Admins</h3>
+          <p className="text-5xl font-bold text-green-200">{totalAdmins}</p>
         </div>
       </div>
     </div>
