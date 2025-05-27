@@ -92,181 +92,87 @@
 
 
 
-// import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-
-// const Login = () => {
-//   const [email, setEmail] = useState('');
-//   const [password, setPassword] = useState('');
-//   const navigate = useNavigate();
-
-//   // const handleLogin = async (e) => {
-//   //   e.preventDefault();
-
-//   //   try {
-//   //     const response = await fetch("http://localhost:5000/api/auth/admin/login", {
-//   //       method: "POST",
-//   //       headers: { "Content-Type": "application/json" },
-//   //       body: JSON.stringify({ email, password }),
-//   //     });
-
-//   //     const data = await response.json();
-
-//   //     if (!response.ok) {
-//   //       toast.error(data.message || "Login failed");
-//   //       return;
-//   //     }
-
-//   //     toast.success("Login successful!");
-//   //     setTimeout(() => navigate("/dashboard"), 1500); // delay for toast to show
-//   //   } catch (error) {
-//   //     console.error("Error:", error);
-//   //     toast.error("Something went wrong. Try again later.");
-//   //   }
-//   // };
-// const handleLogin = async (e) => {
-//   e.preventDefault();
-
-//   try {
-//     const response = await fetch("http://localhost:5000/api/auth/admin/login", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ email, password }),
-//     });
-
-//     const data = await response.json();
-
-//     if (!response.ok) {
-//       toast.error(data.message || "Login failed");
-//       return;
-//     }
-
-//     // ✅ Set login flag
-//     localStorage.setItem("isAdminAuthenticated", "true");
-
-//     toast.success("Login successful!");
-//     setTimeout(() => navigate("/dashboard"), 1500);
-
-//   } catch (error) {
-//     console.error("Error:", error);
-//     toast.error("Something went wrong. Try again later.");
-//   }
-// };
-
-//   return (
-//     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-blue-600">
-//       <ToastContainer />
-//       <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-4">
-//         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
-//         <form onSubmit={handleLogin} className="space-y-5">
-//           <div>
-//             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-//               Email
-//             </label>
-//             <input
-//               type="email"
-//               id="email"
-//               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//               placeholder="admin@example.com"
-//               required
-//             />
-//           </div>
-
-//           <div>
-//             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-//               Password
-//             </label>
-//             <input
-//               type="password"
-//               id="password"
-//               className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-//               value={password}
-//               onChange={(e) => setPassword(e.target.value)}
-//               placeholder="Password"
-//               required
-//             />
-//           </div>
-
-//           <button
-//             type="submit"
-//             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200"
-//           >
-//             Login
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
-
-
-
-// src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-  const [email, setEmail]         = useState('');
-  const [password, setPassword]   = useState('');
-  const navigate                  = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/auth/admin/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        }
-      );
-      const data = await response.json();
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
 
-      if (!response.ok) {
-        toast.error(data.message || "Login failed");
-        return;
-      }
+  //   try {
+  //     const response = await fetch("http://localhost:5000/api/auth/admin/login", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ email, password }),
+  //     });
 
-      // store the JWT for all future admin calls
-      localStorage.setItem("adminToken", data.token);
+  //     const data = await response.json();
 
-      toast.success("Login successful!");
-      setTimeout(() => navigate("/admin/dashboard"), 1200);
-    } catch (error) {
-      console.error("Error:", error);
-      toast.error("Something went wrong. Please try again.");
+  //     if (!response.ok) {
+  //       toast.error(data.message || "Login failed");
+  //       return;
+  //     }
+
+  //     toast.success("Login successful!");
+  //     setTimeout(() => navigate("/dashboard"), 1500); // delay for toast to show
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //     toast.error("Something went wrong. Try again later.");
+  //   }
+  // };
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  try {
+    const response = await fetch("http://localhost:5000/api/auth/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      toast.error(data.message || "Login failed");
+      return;
     }
-  };
+
+    // ✅ Set login flag
+    localStorage.setItem("isAdminAuthenticated", "true");
+
+    toast.success("Login successful!");
+    setTimeout(() => navigate("/dashboard"), 1500);
+
+  } catch (error) {
+    console.error("Error:", error);
+    toast.error("Something went wrong. Try again later.");
+  }
+};
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-500">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-blue-600">
       <ToastContainer />
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm mx-4">
-        <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-8">
-          Admin Login
-        </h2>
-        <form onSubmit={handleLogin} className="space-y-6">
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md mx-4">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Admin Login</h2>
+        <form onSubmit={handleLogin} className="space-y-5">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <input
-              id="email"
               type="email"
-              required
+              id="email"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="admin@example.com"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+              required
             />
           </div>
 
@@ -275,21 +181,21 @@ const Login = () => {
               Password
             </label>
             <input
-              id="password"
               type="password"
-              required
+              id="password"
+              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
               value={password}
-              onChange={e => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition"
+            className="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition duration-200"
           >
-            Log In
+            Login
           </button>
         </form>
       </div>
