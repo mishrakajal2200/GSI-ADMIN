@@ -87,21 +87,29 @@ function Dashboard() {
   };
 
 
-  useEffect(() => {
-    // fetch total orders count on mount
-    const fetchOrdersCount = async () => {
-      try {
-        const { data } = await axios.get(
-          'https://gsi-backend-1.onrender.com/api/payment/count'
-        );
-        setNewOrdersCount(data.count);
-      } catch (err) {
-        console.error('Failed to load orders count:', err);
-        setNewOrdersCount(0);
-      }
-    };
-    fetchOrdersCount();
-  }, []);
+  // Dashboard.js (or wherever you do the fetch)
+useEffect(() => {
+  const fetchNewOrdersCount = async () => {
+    try {
+      // grab the token you stored at login
+      const token = localStorage.getItem('adminToken');
+      const res = await axios.get(
+        'https://gsi-backend-1.onrender.com/api/payment/count',
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+      setNewOrdersCount(res.data.count);
+    } catch (err) {
+      console.error('Failed to load orders count:', err);
+    }
+  };
+
+  fetchNewOrdersCount();
+}, []);
+
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
