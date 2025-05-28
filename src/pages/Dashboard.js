@@ -54,6 +54,7 @@ function Dashboard() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = React.useState(false);
   const [allOrders, setAllOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+   const [stats, setStats] = useState({});
 
   // Infinite Pagination states for Recent Orders
   const initialLoadCount = 5; // Number of orders to display initially
@@ -109,6 +110,27 @@ useEffect(() => {
 
   fetchNewOrdersCount();
 }, []);
+
+useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get('/api/admin/stats', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setStats(response.data);
+      } catch (err) {
+        console.error("Error fetching stats:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
 
 
 useEffect(() => {
@@ -305,9 +327,11 @@ useEffect(() => {
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Active Users</p>
-                <h3 className="text-3xl font-extrabold text-gray-900">1,234</h3>
-              </div>
+        <p className="text-sm text-gray-500 mb-1">Active Users</p>
+        <h3 className="text-3xl font-extrabold text-gray-900">
+          {loading ? "..." : stats.activeUsers}
+        </h3>
+      </div>
               <Activity className="w-14 h-14 text-orange-500 opacity-50" />
             </div>
           </div>
