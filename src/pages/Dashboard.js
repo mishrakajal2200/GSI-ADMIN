@@ -52,15 +52,15 @@ function Dashboard() {
   const [newOrdersCount, setNewOrdersCount] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false); // Starts closed
   const [isUserDropdownOpen, setIsUserDropdownOpen] = React.useState(false);
+  const [allOrders, setAllOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Infinite Pagination states for Recent Orders
   const initialLoadCount = 5; // Number of orders to display initially
   const loadMoreStep = 5;     // Number of additional orders to load each time
   const [visibleOrdersCount, setVisibleOrdersCount] = React.useState(initialLoadCount);
 
-  // Get current orders for the table
-  const currentOrders = allRecentOrders.slice(0, visibleOrdersCount);
-
+  
   // Check if there are more orders to load
   const hasMoreOrders = visibleOrdersCount < allRecentOrders.length;
 
@@ -109,6 +109,27 @@ useEffect(() => {
 
   fetchNewOrdersCount();
 }, []);
+
+
+useEffect(() => {
+    const fetchAllOrders = async () => {
+      try {
+        const token = localStorage.getItem("token"); // or however you store it
+        const response = await axios.get('https://gsi-backend-1.onrender.com/api/payment/all-orders', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        setAllOrders(response.data.orders);
+      } catch (error) {
+        console.error("Error fetching orders", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllOrders();
+  }, []);
 
 
   return (
@@ -328,6 +349,8 @@ useEffect(() => {
               </div>
             </div>
 
+            {/* recent orders */}
+
             <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
               <h3 className="text-xl font-semibold text-gray-800 mb-6">Recent Orders</h3>
               <div className="overflow-x-auto">
@@ -341,7 +364,10 @@ useEffect(() => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-100">
-                    {currentOrders.map((order) => (
+                  {loading ? (
+        <p>Loading orders...</p>
+      ) : (<ul>
+                    {allOrders.map((order) => (
                       <tr key={order.id} className="hover:bg-indigo-50 transition-colors duration-150">
                         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{order.id}</td>
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{order.customer}</td>
@@ -363,6 +389,8 @@ useEffect(() => {
                         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{order.amount}</td>
                       </tr>
                     ))}
+                    </ul>
+                    )}
                   </tbody>
                 </table>
               </div>
