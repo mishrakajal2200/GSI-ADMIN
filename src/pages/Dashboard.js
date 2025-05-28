@@ -300,10 +300,7 @@ useEffect(() => {
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-              <div>
-                <p className="text-sm text-gray-500 mb-1">Total Sales</p>
-                <h3 className="text-3xl font-extrabold text-gray-900">$12,450</h3>
-              </div>
+              
               <DollarSign className="w-14 h-14 text-green-500 opacity-50" />
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
@@ -321,7 +318,9 @@ useEffect(() => {
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
               <div>
                 <p className="text-sm text-gray-500 mb-1">Revenue</p>
-                <h3 className="text-3xl font-extrabold text-gray-900">$8,900</h3>
+                <h3 className="text-3xl font-extrabold text-gray-900">
+                {loading ? "..." : stats.revenue}
+                </h3>
               </div>
               <CreditCard className="w-14 h-14 text-purple-500 opacity-50" />
             </div>
