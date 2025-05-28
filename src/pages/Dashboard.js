@@ -2,7 +2,7 @@
 import React,{useState,useEffect } from 'react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Home, BarChart2, ShoppingCart, Users, Settings, Search, Bell, User, ChevronDown, DollarSign, Package, CreditCard, Activity, Menu, LogOut, MessageSquare, Upload, Download, Mail, ChevronRight } from 'lucide-react';
+import { Home, BarChart2, ShoppingCart, Users, Settings, Search, Bell, User, ChevronDown, Package, CreditCard, Activity, Menu, LogOut, MessageSquare, Upload, Download, Mail, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Sample Data for the Chart
@@ -299,10 +299,7 @@ useEffect(() => {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-              
-              <DollarSign className="w-14 h-14 text-green-500 opacity-50" />
-            </div>
+            
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
               
             <div>
@@ -313,7 +310,7 @@ useEffect(() => {
             </div>
             <Package className="w-14 h-14 text-blue-500 opacity-50" />
          
-              <Package className="w-14 h-14 text-blue-500 opacity-50" />
+              
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
               <div>
