@@ -106,7 +106,7 @@ const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await fetch("https://gsi-backend-1.onrender.com/api/auth/admin/login", {
+    const response = await fetch("https://gsi-backend-1.onrender.com/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
