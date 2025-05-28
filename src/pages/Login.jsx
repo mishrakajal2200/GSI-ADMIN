@@ -106,7 +106,7 @@ const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await fetch("https://gsi-backend-1.onrender.com/api/auth/login", {
+    const response = await fetch("https://gsi-backend-1.onrender.com/api/auth/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -119,7 +119,6 @@ const handleLogin = async (e) => {
       return;
     }
 
-    // ✅ Store token in localStorage
     localStorage.setItem("adminToken", data.token);
     localStorage.setItem("isAdminAuthenticated", "true");
 
@@ -131,6 +130,7 @@ const handleLogin = async (e) => {
     toast.error("Something went wrong. Try again later.");
   }
 };
+
 
 
   return (
