@@ -102,35 +102,11 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const response = await fetch("http://localhost:5000/api/auth/admin/login", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ email, password }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (!response.ok) {
-  //       toast.error(data.message || "Login failed");
-  //       return;
-  //     }
-
-  //     toast.success("Login successful!");
-  //     setTimeout(() => navigate("/dashboard"), 1500); // delay for toast to show
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //     toast.error("Something went wrong. Try again later.");
-  //   }
-  // };
 const handleLogin = async (e) => {
   e.preventDefault();
 
   try {
-    const response = await fetch("http://localhost:5000/api/auth/admin/login", {
+    const response = await fetch("https://gsi-backend-1.onrender.com/api/auth/admin/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -143,7 +119,8 @@ const handleLogin = async (e) => {
       return;
     }
 
-    // ✅ Set login flag
+    // ✅ Store token in localStorage
+    localStorage.setItem("adminToken", data.token);
     localStorage.setItem("isAdminAuthenticated", "true");
 
     toast.success("Login successful!");
@@ -154,6 +131,7 @@ const handleLogin = async (e) => {
     toast.error("Something went wrong. Try again later.");
   }
 };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-blue-600">
