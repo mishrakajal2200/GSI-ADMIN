@@ -136,7 +136,7 @@ useEffect(() => {
 useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const token = localStorage.getItem("token"); // or however you store it
+        const token = localStorage.getItem("adminToken"); // or however you store it
         const response = await axios.get('https://gsi-backend-1.onrender.com/api/payment/all-orders', {
           headers: {
             Authorization: `Bearer ${token}`
