@@ -134,27 +134,38 @@ const Login = () => {
 //   }
 // };
 const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('https://gsi-backend-1.onrender.com/api/auth/login', {
+  e.preventDefault();
+
+  try {
+    const { data } = await axios.post(
+      "https://gsi-backend-1.onrender.com/api/auth/login",
+      {
         email,
-        password
-      });
-
-      if (response.data.user.role !== 'admin') {
-        alert("Access denied: Not an admin user");
-        return;
+        password,
       }
+    );
 
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('adminUser', JSON.stringify(response.data.user));
-      navigate('/admin/dashboard'); // redirect to admin dashboard
-      toast.success('logged in successfully');
-    } catch (err) {
-      alert("Login failed");
-      console.error(err);
+    // ✅ Check if logged-in user is admin
+    if (data.user.role !== "admin") {
+      alert("Access Denied. You are not an Admin.");
+      return;
     }
-  };
+
+    // ✅ Save token and user info
+    localStorage.setItem("adminToken", data.token);
+    localStorage.setItem("adminUser", JSON.stringify(data.user));
+
+    // ✅ Success message and redirect
+    toast.success("Logged in successfully");
+    navigate("/admin-dashboard");
+  } catch (err) {
+    // 🛑 Catch and display error from backend
+    const errorMessage = err.response?.data?.message || "Login failed. Try again.";
+    toast.error(errorMessage);
+  }
+};
+
+
 
 
 
