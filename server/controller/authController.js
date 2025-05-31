@@ -1,25 +1,7 @@
-// import jwt from 'jsonwebtoken';
-
-// export const adminLogin = (req, res) => {
-//   const { email, password } = req.body;
-
-//   if (
-//     email === process.env.ADMIN_EMAIL &&
-//     password === process.env.ADMIN_PASSWORD
-//   ) {
-//     const token = jwt.sign({ email, role: 'admin' }, process.env.JWT_SECRET, {
-//       expiresIn: '1d',
-//     });
-//     return res.json({ token });
-//   }
-
-//   res.status(401).json({ message: 'Invalid credentials' });
-// };
-
 
 
 import User from '../model/User.js';
-
+import Order from '../../../server/models/Order.js';
 import jwt from 'jsonwebtoken';
 
 export const login = async (req, res) => {
@@ -59,6 +41,28 @@ export const login = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const getAdminStats = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+    const activeUsers = await User.countDocuments({ isActive: true }); // Add logic as per your schema
+    const totalOrders = await Order.countDocuments();
+    const totalRevenue = await Order.aggregate([
+      { $match: { isPaid: true } },
+      { $group: { _id: null, total: { $sum: "$totalPrice" } } }
+    ]);
+
+    res.status(200).json({
+      totalUsers,
+      activeUsers,
+      totalOrders,
+      totalRevenue: totalRevenue[0]?.total || 0,
+    });
+  } catch (error) {
+    console.error('Failed to fetch admin stats:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };
