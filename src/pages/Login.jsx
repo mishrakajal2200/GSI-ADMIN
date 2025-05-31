@@ -96,41 +96,65 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+// const handleLogin = async (e) => {
+//   e.preventDefault();
+
+//   try {
+//     const response = await fetch("http://localhost:5000/api/admin/login", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ email, password }),
+//     });
+
+//     const data = await response.json();
+// console.log("Full response data:", data);
+
+//     if (!response.ok) {
+//       toast.error(data.message || "Login failed");
+//       return;
+//     }
+
+//     localStorage.setItem("adminToken", data.token);
+//     localStorage.setItem("isAdminAuthenticated", "true");
+
+//     toast.success("Login successful!");
+//     setTimeout(() => navigate("/admin/dashboard"), 1500);
+
+//   } catch (error) {
+//     console.error("Error:", error);
+//     toast.error("Something went wrong. Try again later.");
+//   }
+// };
 const handleLogin = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
+    try {
+      const response = await axios.post('https://gsi-backend-1.onrender.com/api/auth/login', {
+        email,
+        password
+      });
 
-  try {
-    const response = await fetch("http://localhost:5000/api/admin/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+      if (response.data.user.role !== 'admin') {
+        alert("Access denied: Not an admin user");
+        return;
+      }
 
-    const data = await response.json();
-console.log("Full response data:", data);
-
-    if (!response.ok) {
-      toast.error(data.message || "Login failed");
-      return;
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('adminUser', JSON.stringify(response.data.user));
+      navigate('/admin/dashboard'); // redirect to admin dashboard
+      toast.success('logged in successfully');
+    } catch (err) {
+      alert("Login failed");
+      console.error(err);
     }
-
-    localStorage.setItem("adminToken", data.token);
-    localStorage.setItem("isAdminAuthenticated", "true");
-
-    toast.success("Login successful!");
-    setTimeout(() => navigate("/admin/dashboard"), 1500);
-
-  } catch (error) {
-    console.error("Error:", error);
-    toast.error("Something went wrong. Try again later.");
-  }
-};
+  };
 
 
 

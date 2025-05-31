@@ -86,14 +86,19 @@ function Dashboard() {
     console.log('Import button clicked!');
     alert('Import functionality would be implemented here!');
   };
-
+ useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('adminUser'));
+    if (!user || user.role !== 'admin') {
+      window.location.href = '/admin-login';
+    }
+  }, []);
 
   // Dashboard.js (or wherever you do the fetch)
 useEffect(() => {
   const fetchNewOrdersCount = async () => {
     try {
       // grab the token you stored at login
-      const token = localStorage.getItem('adminToken');
+      const token = localStorage.getItem('token');
       const res = await axios.get(
         'https://gsi-backend-1.onrender.com/api/payment/count',
         {
@@ -114,7 +119,7 @@ useEffect(() => {
 useEffect(() => {
     const fetchStats = async () => {
       try {
-        const token = localStorage.getItem("adminToken");
+        const token = localStorage.getItem("token");
         const response = await axios.get('https://gsi-backend-1.onrender.com/api/admin/stats', {
           headers: {
             Authorization: `Bearer ${token}`
@@ -136,7 +141,7 @@ useEffect(() => {
 useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const token = localStorage.getItem("adminToken"); // or however you store it
+        const token = localStorage.getItem("token"); // or however you store it
         const response = await axios.get('https://gsi-backend-1.onrender.com/api/payment/all-orders', {
           headers: {
             Authorization: `Bearer ${token}`

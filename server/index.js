@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
-import authRoutes from './routes/authRoutes.js';
+// import authRoutes from './routes/authRoutes.js';
 import cors from 'cors';
 import User from './model/User.js';
 import bcrypt from 'bcryptjs';
@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/admin', authRoutes);
+// app.use('/api/admin', authRoutes);
 
 
 app.use('/image', express.static(path.join(__dirname, 'image')));
