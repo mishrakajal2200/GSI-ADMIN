@@ -152,7 +152,7 @@ const handleLogin = async (e) => {
     }
 
     // ✅ Save token and user info
-    localStorage.setItem("adminToken", data.token);
+    localStorage.setItem("token", data.token);
     localStorage.setItem("adminUser", JSON.stringify(data.user));
 
     // ✅ Success message and redirect
