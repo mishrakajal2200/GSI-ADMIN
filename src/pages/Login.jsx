@@ -138,7 +138,7 @@ const handleLogin = async (e) => {
 
   try {
     const { data } = await axios.post(
-      "https://gsi-backend-1.onrender.com/api/auth/admin/login",
+      "https://gsi-backend-1.onrender.com/api/admin/login",
       {
         email,
         password,
