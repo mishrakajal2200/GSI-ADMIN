@@ -14,7 +14,7 @@ const Analytics = () => {
         const adminCount = users.filter(user => user.role === 'admin').length;
         setTotalAdmins(adminCount);
       } catch (error) {
-        console.error("Error fetching analytics data:", error);
+        console.error("Error fetching analytics data", error);
       }
     };
 

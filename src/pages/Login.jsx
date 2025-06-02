@@ -104,35 +104,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-// const handleLogin = async (e) => {
-//   e.preventDefault();
 
-//   try {
-//     const response = await fetch("http://localhost:5000/api/admin/login", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ email, password }),
-//     });
-
-//     const data = await response.json();
-// console.log("Full response data:", data);
-
-//     if (!response.ok) {
-//       toast.error(data.message || "Login failed");
-//       return;
-//     }
-
-//     localStorage.setItem("adminToken", data.token);
-//     localStorage.setItem("isAdminAuthenticated", "true");
-
-//     toast.success("Login successful!");
-//     setTimeout(() => navigate("/admin/dashboard"), 1500);
-
-//   } catch (error) {
-//     console.error("Error:", error);
-//     toast.error("Something went wrong. Try again later.");
-//   }
-// };
 const handleLogin = async (e) => {
   e.preventDefault();
 
