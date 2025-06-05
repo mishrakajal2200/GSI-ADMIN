@@ -15,6 +15,10 @@ const Login = () => {
 const handleLogin = async (e) => {
   e.preventDefault();
 
+
+  console.log("Email:", email);
+  console.log("Password:", password);
+  
   try {
     const { data } = await axios.post(
       "https://gsi-backend-1.onrender.com/api/admin/adminlogin/login",
