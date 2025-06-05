@@ -140,7 +140,7 @@ const Login = () => {
 
       // Show success toast and navigate to admin dashboard
       toast.success("Logged in successfully");
-      navigate("/admin-dashboard");
+      navigate("/dashboard");
     } catch (err) {
       const errorMessage = err.response?.data?.message || "Login failed. Try again.";
       toast.error(errorMessage);
