@@ -53,24 +53,6 @@ const UserList = () => {
     }
   };
 
-//   const handleDelete = async (id) => {
-//   const confirm = window.confirm("Are you sure you want to delete this user?");
-//   if (!confirm) return;
-
-//   const userToken = localStorage.getItem("token");
-
-//   try {
-//     await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${id}`, {
-//       headers: {
-//         Authorization: `Bearer ${userToken}`,
-//       },
-//     });
-//     setUsers(users.filter((user) => user._id !== id));
-//     alert("User deleted successfully!");
-//   } catch (err) {
-//     console.error("Error deleting user:", err);
-//   }
-// };
 
 const handleDelete = async (id) => {
   const userToken = localStorage.getItem("token");
@@ -92,14 +74,19 @@ const handleDelete = async (id) => {
   }
 };
 
-  const handleBlockToggle = async (id, isBlocked) => {
-    try {
-      await axios.patch(`${BACKEND_URL}/${id}/status`, { isBlocked: !isBlocked });
-      setUsers(users.map(user => (user._id === id ? { ...user, isBlocked: !isBlocked } : user)));
-    } catch (err) {
-      console.error('Error toggling block:', err);
-    }
-  };
+ const handleBlockToggle = async (id, isBlocked) => {
+  try {
+    await axios.patch(`${BACKEND_URL}/user/${id}/status`, {
+      isBlocked: !isBlocked,
+    });
+    setUsers(users.map(user =>
+      user._id === id ? { ...user, isBlocked: !isBlocked } : user
+    ));
+  } catch (err) {
+    console.error('Error toggling block:', err);
+  }
+};
+
 
   const handleEditClick = (user) => {
     setEditingUser(user);
