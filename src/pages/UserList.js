@@ -53,37 +53,6 @@ const UserList = () => {
     }
   };
 
-const handleEditSave = async () => {
-  try {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = user?.token;
-
-    await axios.put(
-      `${BACKEND_URL}/user/${editingUser._id}`,
-      {
-        name: editForm.name,
-        email: editForm.email,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    // Update frontend state after successful edit
-    setUsers(users.map(u =>
-      u._id === editingUser._id
-        ? { ...u, name: editForm.name, email: editForm.email }
-        : u
-    ));
-
-    setEditingUser(null); // close the editing form/modal
-  } catch (err) {
-    console.error('Error updating user:', err);
-  }
-};
-
 
 const handleDelete = async (id) => {
   const userToken = localStorage.getItem("token");
@@ -133,21 +102,40 @@ const handleDelete = async (id) => {
     setEditForm({ name: user.name, email: user.email });
   };
 
-  // const handleEditChange = (e) => {
-  //   setEditForm({ ...editForm, [e.target.name]: e.target.value });
-  // };
+  const handleEditChange = (e) => {
+    setEditForm({ ...editForm, [e.target.name]: e.target.value });
+  };
 
-  // const handleEditSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const res = await axios.put(`${BACKEND_URL}/${editingUser._id}`, editForm);
-  //     const updatedUser = res.data;
-  //     setUsers(users.map(user => (user._id === updatedUser._id ? updatedUser : user)));
-  //     setEditingUser(null);
-  //   } catch (err) {
-  //     console.error('Error updating user:', err);
-  //   }
-  // };
+  const handleEditSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = user?.token;
+
+    const res = await axios.put(
+      `${BACKEND_URL}/user/${editingUser._id}`,
+      editForm,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const updatedUser = res.data;
+
+    // Update local users state
+    setUsers(users.map(user =>
+      user._id === updatedUser._id ? updatedUser : user
+    ));
+
+    // Close the modal
+    setEditingUser(null);
+  } catch (err) {
+    console.error('Error updating user:', err);
+  }
+};
+
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -274,25 +262,52 @@ const handleDelete = async (id) => {
 )}
 
       {/* Edit Modal */}
-     {editingUser && (
-  <div className="edit-form">
-    <input
-      type="text"
-      value={editForm.name}
-      onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-      placeholder="Name"
-    />
-    <input
-      type="email"
-      value={editForm.email}
-      onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-      placeholder="Email"
-    />
-    <button onClick={handleEditSave}>Save</button>
-    <button onClick={() => setEditingUser(null)}>Cancel</button>
-  </div>
-)}
-
+      {editingUser && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+            <h3 className="text-xl font-bold mb-4">Edit User</h3>
+            <form onSubmit={handleEditSubmit}>
+              <div className="mb-4">
+                <label className="block text-sm font-semibold mb-1">Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={editForm.name}
+                  onChange={handleEditChange}
+                  className="w-full px-3 py-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-semibold mb-1">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={editForm.email}
+                  onChange={handleEditChange}
+                  className="w-full px-3 py-2 border rounded"
+                  required
+                />
+              </div>
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setEditingUser(null)}
+                  className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
