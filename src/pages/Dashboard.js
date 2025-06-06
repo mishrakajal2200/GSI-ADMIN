@@ -169,9 +169,14 @@ useEffect(() => {
           lg:static lg:h-auto lg:w-64
         `}
       >
-        <div className="p-6 border-b border-gray-700">
-          <h1 className="text-3xl font-extrabold text-indigo-400 tracking-wider">AdminFlow</h1>
-        </div>
+       <div className="p-6 border-b border-gray-700">
+  <img
+    src="./bhumi.png" // Replace with the correct path
+    alt="Admin Logo"
+    className="h-12 w-auto mx-auto" // Adjust height/width as needed
+  />
+</div>
+
         <nav className="mt-8">
           <Link
             to="/admin/dashboard"
