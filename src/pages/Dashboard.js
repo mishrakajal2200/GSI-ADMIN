@@ -120,7 +120,7 @@ useEffect(() => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get('https://gsi-backend-1.onrender.com/api/admin/stats', {
+        const response = await axios.get('https://gsi-backend-1.onrender.com/api/admin/statement/stats', {
           headers: {
             Authorization: `Bearer ${token}`
           }
