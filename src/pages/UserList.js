@@ -109,7 +109,7 @@ const handleDelete = async (id) => {
   const handleEditSubmit = async (e) => {
   e.preventDefault();
   try {
-    const token = JSON.parse(localStorage.getItem('user'))?.token;
+    const token = localStorage.getItem('token'); // Correct key!
 
     const res = await axios.put(
       `${BACKEND_URL}/user/${editingUser._id}`,
@@ -123,12 +123,12 @@ const handleDelete = async (id) => {
 
     const updatedUser = res.data;
 
-    // Update users state
+    // Update users list
     setUsers(users.map(user =>
       user._id === updatedUser._id ? updatedUser : user
     ));
 
-    // Close the modal
+    // Close modal
     setEditingUser(null);
   } catch (err) {
     console.error('Error updating user:', err);
