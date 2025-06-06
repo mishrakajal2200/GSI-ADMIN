@@ -117,24 +117,27 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get('https://gsi-backend-1.onrender.com/api/admin/statement/stats', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setStats(response.data);
-      } catch (err) {
-        console.error("Error fetching stats:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  
+  const fetchStats = async () => {
+    try {
+      const token = localStorage.getItem("token");
+    const BACKEND_URL = 'https://gsi-backend-1.onrender.com';
+      const res = await axios.get(`${BACKEND_URL}/admin/stats`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    fetchStats();
-  }, []);
+      console.log("Stats:", res.data);
+      setStats(res.data);
+    } catch (err) {
+      console.error("Error fetching stats:", err);
+    }
+  };
+
+  fetchStats();
+}, []);
+
 
 
 
