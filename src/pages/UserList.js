@@ -252,7 +252,7 @@ const UserList = () => {
   const [showDetails, setShowDetails] = useState(null);
   const [editForm, setEditForm] = useState({ name: '', email: '' });
   const [showModal, setShowModal] = useState(false);
-  const [userToDelete, setUserToDelete] = useState(null);
+  const [ setUserToDelete] = useState(null);
 
 
   const BACKEND_URL = 'https://gsi-backend-1.onrender.com/api/auth';
@@ -333,9 +333,6 @@ const handleDelete = async (id) => {
     setUserToDelete(null);
   }
 };
-
-
-
 
   const handleBlockToggle = async (id, isBlocked) => {
     try {
