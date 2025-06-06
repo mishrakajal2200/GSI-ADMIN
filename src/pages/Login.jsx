@@ -35,6 +35,7 @@ const Login = () => {
       // Save token and user info to localStorage
       localStorage.setItem("token", data.token);
       localStorage.setItem("adminUser", JSON.stringify(data.user));
+      localStorage.setItem("isAdminAuthenticated", "true");
       // Show success toast and navigate to admin dashboard
       toast.success("Logged in successfully");
       navigate("/admin/dashboard");
