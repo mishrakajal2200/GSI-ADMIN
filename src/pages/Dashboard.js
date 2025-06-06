@@ -138,10 +138,6 @@ useEffect(() => {
   fetchStats();
 }, []);
 
-
-
-
-
 useEffect(() => {
     const fetchAllOrders = async () => {
       try {
@@ -161,7 +157,6 @@ useEffect(() => {
 
     fetchAllOrders();
   }, []);
-
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
@@ -335,13 +330,20 @@ useEffect(() => {
             </div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Revenue</p>
-                <h3 className="text-3xl font-extrabold text-gray-900">
-                {loading ? "..." : stats.revenue}
-                </h3>
-              </div>
+  <p className="text-sm text-gray-500 mb-1">Revenue</p>
+  <h3 className="text-3xl font-extrabold text-gray-900">
+    {loading ? "..." : stats.totalRevenue}
+  </h3>
+</div>
               <CreditCard className="w-14 h-14 text-purple-500 opacity-50" />
             </div>
+
+            <div>
+  <p className="text-sm text-gray-500 mb-1">Total Users</p>
+  <h3 className="text-3xl font-extrabold text-gray-900">
+    {loading ? "..." : stats.totalUsers}
+  </h3>
+</div>
             <div className="bg-white p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
               <div>
         <p className="text-sm text-gray-500 mb-1">Active Users</p>
