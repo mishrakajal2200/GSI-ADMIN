@@ -13,17 +13,23 @@ const UserList = () => {
   const BACKEND_URL = 'https://gsi-backend-1.onrender.com/api/auth';
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await axios.get(BACKEND_URL);
-        setUsers(res.data);
-        setFilteredUsers(res.data);
-      } catch (err) {
-        console.error('Error fetching users:', err);
-      }
-    };
-    fetchUsers();
-  }, []);
+  const fetchUsers = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(BACKEND_URL, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUsers(res.data);
+      setFilteredUsers(res.data);
+    } catch (err) {
+      console.error('Error fetching users:', err);
+    }
+  };
+  fetchUsers();
+}, []);
+
 
   useEffect(() => {
     const lowerQuery = searchQuery.toLowerCase();
