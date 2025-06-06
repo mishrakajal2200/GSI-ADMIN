@@ -109,8 +109,7 @@ const handleDelete = async (id) => {
   const handleEditSubmit = async (e) => {
   e.preventDefault();
   try {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const token = user?.token;
+    const token = JSON.parse(localStorage.getItem('token'))?.token;
 
     const res = await axios.put(
       `${BACKEND_URL}/user/${editingUser._id}`,
@@ -124,7 +123,7 @@ const handleDelete = async (id) => {
 
     const updatedUser = res.data;
 
-    // Update local users state
+    // Update users state
     setUsers(users.map(user =>
       user._id === updatedUser._id ? updatedUser : user
     ));
