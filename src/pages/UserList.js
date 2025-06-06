@@ -109,7 +109,7 @@ const handleDelete = async (id) => {
   const handleEditSubmit = async (e) => {
   e.preventDefault();
   try {
-    const token = JSON.parse(localStorage.getItem('token'))?.token;
+    const token = JSON.parse(localStorage.getItem('user'))?.token;
 
     const res = await axios.put(
       `${BACKEND_URL}/user/${editingUser._id}`,
