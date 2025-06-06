@@ -312,8 +312,8 @@ useEffect(() => {
               <div>
                 <p className="text-sm text-gray-500 mb-1">Total Sales</p>
                 <h3 className="text-3xl font-extrabold text-gray-900">
-                  {loading ? "..." : stats.totalsales}
-                </h3>
+  {loading ? "..." : stats.totalSales}
+</h3>
               </div>
               <DollarSign className="w-14 h-14 text-green-500 opacity-50" />
             </div>
