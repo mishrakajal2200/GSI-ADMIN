@@ -251,6 +251,9 @@ const UserList = () => {
   const [editingUser, setEditingUser] = useState(null);
   const [showDetails, setShowDetails] = useState(null);
   const [editForm, setEditForm] = useState({ name: '', email: '' });
+  const [showModal, setShowModal] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
+
 
   const BACKEND_URL = 'https://gsi-backend-1.onrender.com/api/auth';
 
@@ -292,24 +295,45 @@ const UserList = () => {
     }
   };
 
-  const handleDelete = async (id) => {
-  const confirm = window.confirm("Are you sure you want to delete this user?");
-  if (!confirm) return;
+//   const handleDelete = async (id) => {
+//   const confirm = window.confirm("Are you sure you want to delete this user?");
+//   if (!confirm) return;
 
+//   const userToken = localStorage.getItem("token");
+
+//   try {
+//     await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${id}`, {
+//       headers: {
+//         Authorization: `Bearer ${userToken}`,
+//       },
+//     });
+//     setUsers(users.filter((user) => user._id !== id));
+//     alert("User deleted successfully!");
+//   } catch (err) {
+//     console.error("Error deleting user:", err);
+//   }
+// };
+
+const handleDelete = async () => {
   const userToken = localStorage.getItem("token");
 
+
   try {
-    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${id}`, {
+    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${userToDelete}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
-    setUsers(users.filter((user) => user._id !== id));
+    setUsers(users.filter((user) => user._id !== userToDelete));
     alert("User deleted successfully!");
   } catch (err) {
     console.error("Error deleting user:", err);
+  } finally {
+    setShowModal(false);
+    setUserToDelete(null);
   }
 };
+
 
 
 
@@ -444,6 +468,29 @@ const UserList = () => {
         </div>
       )}
 
+{showModal && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-start pt-24 transition-opacity duration-300">
+    <div className="bg-white rounded-xl shadow-lg w-96 p-6 transform transition-all duration-300 animate-slide-down">
+      <h2 className="text-lg font-semibold mb-4 text-center text-red-600">Confirm Deletion</h2>
+      <p className="text-center mb-6">Are you sure you want to delete this user?</p>
+      <div className="flex justify-between">
+        <button
+          onClick={handleDelete}
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+        >
+          Yes, Delete
+        </button>
+        <button
+          onClick={() => setShowModal(false)}
+          className="bg-gray-300 hover:bg-gray-400 text-black px-4 py-2 rounded-md"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
       {/* Edit Modal */}
       {editingUser && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-40 flex items-center justify-center z-50">
@@ -494,5 +541,7 @@ const UserList = () => {
     </div>
   );
 };
+
+
 
 export default UserList;
