@@ -76,9 +76,19 @@ const handleDelete = async (id) => {
 
  const handleBlockToggle = async (id, isBlocked) => {
   try {
-    await axios.patch(`${BACKEND_URL}/user/${id}/status`, {
-      isBlocked: !isBlocked,
-    });
+    const token = localStorage.getItem('token'); // or 'userToken', depending on what you stored
+
+    await axios.patch(
+      `${BACKEND_URL}/user/${id}/status`,
+      { isBlocked: !isBlocked },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // Update local state
     setUsers(users.map(user =>
       user._id === id ? { ...user, isBlocked: !isBlocked } : user
     ));
@@ -86,6 +96,7 @@ const handleDelete = async (id) => {
     console.error('Error toggling block:', err);
   }
 };
+
 
 
   const handleEditClick = (user) => {
