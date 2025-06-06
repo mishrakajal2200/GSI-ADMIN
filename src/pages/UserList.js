@@ -293,16 +293,22 @@ const UserList = () => {
   };
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm("Are you sure you want to delete this user?");
-    if (!confirm) return;
+  const confirm = window.confirm("Are you sure you want to delete this user?");
+  if (!confirm) return;
 
-    try {
-      await axios.delete(`${BACKEND_URL}/${id}`);
-      setUsers(users.filter(user => user._id !== id));
-    } catch (err) {
-      console.error('Error deleting user:', err);
-    }
-  };
+  try {
+    const userToken = localStorage.getItem('token');
+    await axios.delete(`${BACKEND_URL}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    setUsers(users.filter(user => user._id !== id));
+  } catch (err) {
+    console.error('Error deleting user:', err);
+  }
+};
+
 
   const handleBlockToggle = async (id, isBlocked) => {
     try {
