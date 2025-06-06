@@ -171,7 +171,7 @@ useEffect(() => {
       >
        <div className="p-6 border-b border-gray-700">
   <img
-    src="./bhumi.png" // Replace with the correct path
+    src="/bhumi.png" // Replace with the correct path
     alt="Admin Logo"
     className="h-12 w-auto mx-auto" // Adjust height/width as needed
   />
