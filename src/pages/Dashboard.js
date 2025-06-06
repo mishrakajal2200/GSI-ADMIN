@@ -117,12 +117,12 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-  
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem("token");
-    const BACKEND_URL = 'https://gsi-backend-1.onrender.com';
-      const res = await axios.get(`${BACKEND_URL}/admin/statement/stats`, {
+      const BACKEND_URL = 'https://gsi-backend-1.onrender.com';
+
+      const res = await axios.get(`${BACKEND_URL}/api/admin/stats`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -137,6 +137,7 @@ useEffect(() => {
 
   fetchStats();
 }, []);
+
 
 
 
