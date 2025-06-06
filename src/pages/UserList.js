@@ -314,17 +314,17 @@ const UserList = () => {
 //   }
 // };
 
-const handleDelete = async () => {
+const handleDelete = async (id) => {
   const userToken = localStorage.getItem("token");
 
 
   try {
-    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${userToDelete}`, {
+    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
-    setUsers(users.filter((user) => user._id !== userToDelete));
+    setUsers(users.filter((user) => user._id !== id));
     alert("User deleted successfully!");
   } catch (err) {
     console.error("Error deleting user:", err);
