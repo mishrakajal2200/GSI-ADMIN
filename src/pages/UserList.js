@@ -299,7 +299,7 @@ const UserList = () => {
   const userToken = localStorage.getItem("token");
 
   try {
-    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/${id}`, {
+    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
