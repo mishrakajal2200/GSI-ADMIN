@@ -71,7 +71,8 @@ function Dashboard() {
   const updateStatus = async (orderId, newStatus) => {
   try {
     const token = localStorage.getItem("token");
-    const res = await fetch(`/api/admin/orders/${orderId}/status`, {
+    const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+    const res = await fetch(`${BACKEND_URL}/api/admin/orders/${orderId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
