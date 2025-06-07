@@ -429,10 +429,10 @@ useEffect(() => {
     allOrders.map((order) => (
       <tr key={order.id} className="hover:bg-indigo-50 transition-colors duration-150">
         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{order.id}</td>
-        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{order.customer}</td>
+        <td className="px-4 py-3 whitespace-nowrap text-sm text-center text-gray-700">{order.customer}</td>
        <td className="px-4 py-3 whitespace-nowrap text-sm">
   <span
-    className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
+    className={`px-3 py-1 inline-flex text-xs text-center leading-5 font-semibold rounded-full
       ${
         order.status === 'Completed'
           ? 'bg-green-100 text-green-800'
@@ -449,7 +449,7 @@ useEffect(() => {
   </span>
 </td>
 
-        <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{order.amount}</td>
+        <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-700">{order.amount}</td>
       </tr>
     ))
   )}
