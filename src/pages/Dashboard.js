@@ -42,19 +42,7 @@ function Dashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreOrders, setHasMoreOrders] = useState(true);
 
-  // Infinite Pagination states for Recent Orders
-  // Number of orders to display initially
-     
   
-
-  
-  // Check if there are more orders to load
-  
-
-  // Handle loading more orders
-  // const handleLoadMore = () => {
-  //   setVisibleOrdersCount(prevCount => prevCount + loadMoreStep);
-  // };
   const handleLoadMore = async () => {
   const nextPage = currentPage + 1;
   const BACKEND_URL = "https://gsi-backend-1.onrender.com"
