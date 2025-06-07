@@ -118,7 +118,7 @@ const ProductList = () => {
             <img
               src={`https://www.gsienterprises.com/${product.image}`}
               alt={product.name}
-              className="w-full h-48 object-cover rounded-xl border"
+              className="w-full h-48 object-contain rounded-xl border"
             />
           )}
 
