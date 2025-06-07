@@ -68,11 +68,11 @@ function Dashboard() {
     setIsSidebarOpen(false);
   };
 
-  const updateStatus = async (orderId, newStatus) => {
+  const updateStatus = async (id, newStatus) => {
   try {
     const token = localStorage.getItem("token");
     const BACKEND_URL = "https://gsi-backend-1.onrender.com";
-    const res = await fetch(`${BACKEND_URL}/api/admin/orders/${orderId}/status`, {
+    const res = await fetch(`${BACKEND_URL}/api/admin/orders/${id}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
