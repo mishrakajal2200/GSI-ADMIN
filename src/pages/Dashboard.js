@@ -430,21 +430,25 @@ useEffect(() => {
       <tr key={order.id} className="hover:bg-indigo-50 transition-colors duration-150">
         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{order.id}</td>
         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{order.customer}</td>
-        <td className="px-4 py-3 whitespace-nowrap text-sm">
-          <span
-            className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-              order.status === 'Completed'
-                ? 'bg-green-100 text-green-800'
-                : order.status === 'Pending'
-                ? 'bg-yellow-100 text-yellow-800'
-                : order.status === 'Shipped'
-                ? 'bg-blue-100 text-blue-800'
-                : 'bg-red-100 text-red-800'
-            }`}
-          >
-            {order.status}
-          </span>
-        </td>
+       <td className="px-4 py-3 whitespace-nowrap text-sm">
+  <span
+    className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full
+      ${
+        order.status === 'Completed'
+          ? 'bg-green-100 text-green-800'
+          : order.status === 'Pending'
+          ? 'bg-yellow-100 text-yellow-800'
+          : order.status === 'Shipped'
+          ? 'bg-blue-100 text-blue-800'
+          : order.status === 'Processing'
+          ? 'bg-purple-100 text-purple-800'
+          : 'bg-red-100 text-red-800'
+      }`}
+  >
+    {order.status}
+  </span>
+</td>
+
         <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{order.amount}</td>
       </tr>
     ))
