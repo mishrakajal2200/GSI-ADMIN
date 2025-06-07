@@ -58,7 +58,7 @@ const ProductList = () => {
             >
               {product.image && (
                 <img
-                  src={`https://gsi-backend-1.onrender.com/${product.image}`}
+                  src={`https://www.gsienterprises.com/${product.image}`}
                   alt={product.name}
                   className="w-full sm:w-24 h-24 object-cover rounded-md"
                 />
