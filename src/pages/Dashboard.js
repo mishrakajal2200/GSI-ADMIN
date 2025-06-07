@@ -456,29 +456,36 @@ useEffect(() => {
     </tr>
   ) : (
     allOrders.map((order) => (
-      <tr key={order.id} className="hover:bg-indigo-50 transition-colors duration-150">
-        <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{order.id}</td>
+      <tr key={order._id} className="hover:bg-indigo-50 transition-colors duration-150">
+        <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{order._id}</td>
         <td className="px-4 py-3 whitespace-nowrap text-sm text-center text-gray-700">{order.customer}</td>
-       <td className="px-4 py-3 whitespace-nowrap text-sm">
-  <select
-  value={order.status}
-  onChange={(e) => updateStatus(order._id, e.target.value)}
-  className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
->
-  {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
-    <option key={status} value={status}>
-      {status}
-    </option>
-  ))}
-</select>
 
-</td>
+        <td className="px-4 py-3 whitespace-nowrap text-sm">
+          <select
+            value={order.status}
+            onChange={(e) => {
+              if (order._id) {
+                updateStatus(order._id, e.target.value);
+              } else {
+                console.error("❌ order._id is undefined", order);
+              }
+            }}
+            className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
+          >
+            {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
+              <option key={status} value={status}>
+                {status}
+              </option>
+            ))}
+          </select>
+        </td>
 
         <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-700">{order.amount}</td>
       </tr>
     ))
   )}
 </tbody>
+
 
                 </table>
               </div>
