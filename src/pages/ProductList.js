@@ -56,13 +56,15 @@ const ProductList = () => {
               key={product._id}
               className="bg-white rounded-xl shadow-sm p-4 flex flex-col sm:flex-row sm:items-center gap-4 hover:shadow-md transition"
             >
-              {product.image && (
-                <img
-                  src={`https://gsi-backend-1.onrender.com/${product.image}`}
-                  alt={product.name}
-                  className="w-full sm:w-24 h-24 object-cover rounded-md"
-                />
-              )}
+              <img
+  src={`https://gsi-backend-1.onrender.com/${product.image}`}
+  alt={product.name}
+  onError={(e) => {
+    e.target.src = "/placeholder.jpg"; // or any default image
+  }}
+  className="w-full sm:w-24 h-24 object-cover rounded-md"
+/>
+
 
               <div className="flex-1">
                 <h3 className="font-semibold text-lg text-gray-900">{product.name}</h3>
