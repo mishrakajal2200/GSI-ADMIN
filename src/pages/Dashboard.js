@@ -68,6 +68,31 @@ function Dashboard() {
     setIsSidebarOpen(false);
   };
 
+  const updateStatus = async (orderId, newStatus) => {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`/api/admin/orders/${orderId}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`, // if you're using JWT
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("Order status updated!");
+      // refresh state here if needed
+    } else {
+      alert(data.message || "Failed to update status");
+    }
+  } catch (err) {
+    console.error("Error updating status:", err);
+  }
+};
+
+
   // Function to handle export action
   const handleExport = () => {
     console.log('Export button clicked!');
@@ -432,22 +457,18 @@ useEffect(() => {
         <td className="px-4 py-3 whitespace-nowrap text-sm font-medium text-gray-900">{order.id}</td>
         <td className="px-4 py-3 whitespace-nowrap text-sm text-center text-gray-700">{order.customer}</td>
        <td className="px-4 py-3 whitespace-nowrap text-sm">
-  <span
-    className={`px-3 py-1 inline-flex text-xs text-center leading-5 font-semibold rounded-full
-      ${
-        order.status === 'Completed'
-          ? 'bg-green-100 text-green-800'
-          : order.status === 'Pending'
-          ? 'bg-yellow-100 text-yellow-800'
-          : order.status === 'Shipped'
-          ? 'bg-blue-100 text-blue-800'
-          : order.status === 'Processing'
-          ? 'bg-purple-100 text-purple-800'
-          : 'bg-red-100 text-red-800'
-      }`}
-  >
-    {order.status || 'Unknown'}
-  </span>
+  <select
+  value={order.status}
+  onChange={(e) => updateStatus(order._id, e.target.value)}
+  className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
+>
+  {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
+    <option key={status} value={status}>
+      {status}
+    </option>
+  ))}
+</select>
+
 </td>
 
         <td className="px-4 py-3 whitespace-nowrap text-center text-sm text-gray-700">{order.amount}</td>
