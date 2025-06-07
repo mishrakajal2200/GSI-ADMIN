@@ -22,23 +22,7 @@ const salesData = [
 ];
 
 // Sample Data for Recent Orders Table (Expanded for infinite pagination demonstration)
-const allRecentOrders = [
-  { id: '#001', customer: 'Alice Smith', date: '2023-05-10', amount: '$120.00', status: 'Completed' },
-  { id: '#002', customer: 'Bob Johnson', date: '2023-05-09', amount: '$85.50', status: 'Pending' },
-  { id: '#003', customer: 'Charlie Brown', date: '2023-05-08', amount: '$210.75', status: 'Shipped' },
-  { id: '#004', customer: 'Diana Prince', date: '2023-05-07', amount: '$50.00', status: 'Cancelled' },
-  { id: '#005', customer: 'Eve Adams', date: '2023-05-06', amount: '$150.20', status: 'Completed' },
-  { id: '#006', customer: 'Frank White', date: '2023-05-05', amount: '$99.99', status: 'Completed' },
-  { id: '#007', customer: 'Grace Lee', date: '2023-05-04', amount: '$300.00', status: 'Shipped' },
-  { id: '#008', customer: 'Henry King', date: '2023-05-03', amount: '$75.25', status: 'Pending' },
-  { id: '#009', customer: 'Ivy Green', date: '2023-05-02', amount: '$180.00', status: 'Completed' },
-  { id: '#010', customer: 'Jack Black', date: '2023-05-01', amount: '$25.00', status: 'Cancelled' },
-  { id: '#011', customer: 'Karen Blue', date: '2023-04-30', amount: '$110.00', status: 'Completed' },
-  { id: '#012', customer: 'Liam Red', date: '2023-04-29', amount: '$195.00', status: 'Shipped' },
-  { id: '#013', customer: 'Mia Green', date: '2023-04-28', amount: '$220.00', status: 'Completed' },
-  { id: '#014', customer: 'Noah Brown', date: '2023-04-27', amount: '$65.00', status: 'Pending' },
-  { id: '#015', customer: 'Olivia White', date: '2023-04-26', amount: '$175.00', status: 'Shipped' },
-];
+
 
 // Sample Data for Recent Activities
 const recentActivities = [
@@ -55,20 +39,41 @@ function Dashboard() {
   const [allOrders, setAllOrders] = useState([]);
   const [loading, setLoading] = useState(true);
    const [stats, setStats] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [hasMoreOrders, setHasMoreOrders] = useState(true);
 
   // Infinite Pagination states for Recent Orders
-  const initialLoadCount = 5; // Number of orders to display initially
-  const loadMoreStep = 5;     // Number of additional orders to load each time
-  const [visibleOrdersCount, setVisibleOrdersCount] = React.useState(initialLoadCount);
+  // Number of orders to display initially
+     
+  
 
   
   // Check if there are more orders to load
-  const hasMoreOrders = visibleOrdersCount < allRecentOrders.length;
+  
 
   // Handle loading more orders
-  const handleLoadMore = () => {
-    setVisibleOrdersCount(prevCount => prevCount + loadMoreStep);
-  };
+  // const handleLoadMore = () => {
+  //   setVisibleOrdersCount(prevCount => prevCount + loadMoreStep);
+  // };
+  const handleLoadMore = async () => {
+  const nextPage = currentPage + 1;
+  const BACKEND_URL = "https://gsi-backend-1.onrender.com"
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.get(`${BACKEND_URL}/api/admin/orders/recent?page=${nextPage}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setAllOrders((prev) => [...prev, ...res.data.orders]);
+    setHasMoreOrders(res.data.hasMore);
+    setCurrentPage(nextPage);
+  } catch (err) {
+    console.error("Failed to load more orders", err);
+  }
+};
+
 
   // Function to close sidebar (useful for mobile overlay)
   const closeSidebar = () => {
@@ -158,6 +163,31 @@ useEffect(() => {
     fetchAllOrders();
   }, []);
 
+useEffect(() => {
+  const fetchRecentOrders = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+
+      const res = await axios.get(`${BACKEND_URL}/api/admin/orders/recent?page=1`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setAllOrders(res.data.orders);
+      setHasMoreOrders(res.data.hasMore);
+      setLoading(false);
+    } catch (err) {
+      console.error("Error loading recent orders", err);
+      setLoading(false);
+    }
+  };
+
+  fetchRecentOrders();
+}, []);
+
+  
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
 
@@ -388,7 +418,6 @@ useEffect(() => {
             </div>
 
             {/* recent orders */}
-
             <div className="bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
               <h3 className="text-xl font-semibold text-gray-800 mb-6">Recent Orders</h3>
               <div className="overflow-x-auto">
