@@ -370,6 +370,7 @@ useEffect(() => {
 
           {/* Sales Chart, Recent Orders, and Recent Activities */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
             <div className="lg:col-span-2 bg-white p-6 rounded-3xl shadow-xl border border-gray-100">
               <h3 className="text-xl font-semibold text-gray-800 mb-6">Sales Performance</h3>
               <div className="h-80">
@@ -445,7 +446,7 @@ useEffect(() => {
           : 'bg-red-100 text-red-800'
       }`}
   >
-    {order.status}
+    {order.status || 'Unknown'}
   </span>
 </td>
 
