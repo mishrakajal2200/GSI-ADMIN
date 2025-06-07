@@ -68,15 +68,16 @@ function Dashboard() {
     setIsSidebarOpen(false);
   };
 
-  const updateStatus = async (id, newStatus) => {
+ const updateStatus = async (orderId, newStatus) => {
   try {
     const token = localStorage.getItem("token");
     const BACKEND_URL = "https://gsi-backend-1.onrender.com";
-    const res = await fetch(`${BACKEND_URL}/api/admin/orders/${id}/status`, {
+
+    const res = await fetch(`${BACKEND_URL}/api/admin/orders/${orderId}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`, // if you're using JWT
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ status: newStatus }),
     });
@@ -84,7 +85,7 @@ function Dashboard() {
     const data = await res.json();
     if (res.ok) {
       alert("Order status updated!");
-      // refresh state here if needed
+      // optionally reload or update state here
     } else {
       alert(data.message || "Failed to update status");
     }
@@ -92,6 +93,7 @@ function Dashboard() {
     console.error("Error updating status:", err);
   }
 };
+
 
 
   // Function to handle export action
