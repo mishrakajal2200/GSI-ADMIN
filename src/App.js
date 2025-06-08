@@ -6,9 +6,10 @@ import Login from './pages/Login.jsx';
 import ProductList from './pages/ProductList';
 import UserList from './pages/UserList';
 import AdminSubscribers from './pages/AdminSubscribers.js';
-import CreateProduct from './pages/CreateProduct.js';
+
 import EditProduct from './pages/EditProduct.js';
 import Analytics from './pages/Analytics.js'; // ✅ Make sure this exists
+import ProductCreate from './pages/ProductCreate.js';
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
 
         <Route path="/admin/products/create" element={
           <AdminRoute>
-            <CreateProduct />
+            <ProductCreate />
           </AdminRoute>
         } />
 

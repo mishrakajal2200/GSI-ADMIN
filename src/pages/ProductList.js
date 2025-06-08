@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import DeleteProductButton from './DeleteProductButton';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -19,19 +20,7 @@ const ProductList = () => {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
-    if (!confirmDelete) return;
-
-    try {
-      await axios.delete(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`);
-      setProducts(products.filter((p) => p._id !== id));
-      alert('Product deleted successfully.');
-    } catch (err) {
-      alert('Failed to delete product.');
-    }
-  };
-
+ 
   return (
     // <div className="p-4 md:p-6 max-w-6xl mx-auto">
     //   {/* Header */}
@@ -129,18 +118,17 @@ const ProductList = () => {
           </div>
 
           <div className="flex justify-between gap-2">
-            <button
-              onClick={() => navigate(`/admin/products/${product._id}/edit`)}
-              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-medium"
-            >
-              ✏️ Edit
-            </button>
-            <button
-              onClick={() => handleDelete(product._id)}
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-sm font-medium"
-            >
-              🗑 Delete
-            </button>
+           <button
+  onClick={() => navigate(`/admin/products/${product._id}/edit`)}
+  className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-medium"
+>
+  ✏️ Edit
+</button>
+
+<DeleteProductButton
+  productId={product._id}
+  onDelete={() => setProducts(products.filter(p => p._id !== product._id))}
+/>
           </div>
         </div>
       ))}
