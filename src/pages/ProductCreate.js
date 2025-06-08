@@ -43,7 +43,7 @@ const ProductCreate = () => {
 
     try {
       await axios.post(
-        'https://gsi-backend-1.onrender.com/api/getproducts/admin/products/create',
+        'https://gsi-backend-1.onrender.com/api/admin/products/create',
         formData
       );
       alert('✅ Product created successfully!');
