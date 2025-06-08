@@ -1,10 +1,11 @@
-// src/pages/ProductEdit.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const ProductEdit = () => {
-  const [form, setForm] = useState({
+const EditProduct = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
     name: '',
     brand: '',
     mainCategory: '',
@@ -13,74 +14,59 @@ const ProductEdit = () => {
     price: '',
     mrp: '',
     description: '',
+    image: null,
   });
-  const [image, setImage] = useState(null);
-  const { id } = useParams(); // product ID from route
-  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch product details to prefill form
-    axios
-      .get(`https://gsi-backend-1.onrender.com/api/getproducts/admin/products/${id}`)
-      .then((res) => setForm(res.data))
-      .catch((err) => console.error('Error fetching product:', err));
+    const fetchProduct = async () => {
+      const res = await axios.get(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`);
+      setFormData(res.data);
+    };
+    fetchProduct();
   }, [id]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === 'image') {
+      setFormData({ ...formData, image: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
   };
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-  };
-
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) => formData.append(key, value));
-    if (image) formData.append('image', image);
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
 
     try {
-      await axios.put(`https://gsi-backend-1.onrender.com/api/getproducts/admin/products/${id}`, formData);
-      alert('✅ Product updated successfully!');
+      await axios.put(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`, data);
+      alert('Product updated!');
       navigate('/admin/products');
     } catch (err) {
-      console.error(err);
-      alert('❌ Failed to update product.');
+      console.error('Update failed:', err);
+      alert('Update error.');
     }
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-xl mt-6">
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow">
       <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {['name', 'brand', 'mainCategory', 'subCategory', 'subSubCategory', 'price', 'mrp', 'description'].map((field) => (
-          <input
-            key={field}
-            name={field}
-            value={form[field]}
-            onChange={handleChange}
-            placeholder={field}
-            className="w-full px-4 py-2 border rounded-lg"
-            required
-          />
-        ))}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="w-full px-4 py-2 border rounded-lg"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
-        >
-          Update Product
-        </button>
+      <form onSubmit={handleUpdate} className="space-y-4" encType="multipart/form-data">
+        <input name="name" value={formData.name} onChange={handleChange} required className="input" />
+        <input name="brand" value={formData.brand} onChange={handleChange} required className="input" />
+        <input name="mainCategory" value={formData.mainCategory} onChange={handleChange} className="input" />
+        <input name="subCategory" value={formData.subCategory} onChange={handleChange} className="input" />
+        <input name="subSubCategory" value={formData.subSubCategory} onChange={handleChange} className="input" />
+        <input name="price" type="number" value={formData.price} onChange={handleChange} required className="input" />
+        <input name="mrp" type="number" value={formData.mrp} onChange={handleChange} required className="input" />
+        <textarea name="description" value={formData.description} onChange={handleChange} className="input" />
+        <input name="image" type="file" onChange={handleChange} className="input" />
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Update Product</button>
       </form>
     </div>
   );
 };
 
-export default ProductEdit;
+export default EditProduct;

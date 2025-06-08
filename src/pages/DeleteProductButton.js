@@ -3,15 +3,14 @@ import axios from 'axios';
 
 const DeleteProductButton = ({ productId, onDelete }) => {
   const handleDelete = async () => {
-    const confirm = window.confirm('Are you sure you want to delete this product?');
-    if (!confirm) return;
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
 
     try {
       await axios.delete(`https://gsi-backend-1.onrender.com/api/getproducts/${productId}`);
-      alert('Product deleted successfully.');
-      onDelete(); // Call parent method to update list
+      onDelete(); // Update UI
     } catch (err) {
-      alert('Failed to delete product.');
+      console.error('Failed to delete product:', err);
+      alert('Delete failed.');
     }
   };
 
@@ -20,7 +19,7 @@ const DeleteProductButton = ({ productId, onDelete }) => {
       onClick={handleDelete}
       className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg text-sm font-medium"
     >
-      🗑 Delete
+      🗑️ Delete
     </button>
   );
 };

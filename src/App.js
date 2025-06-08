@@ -9,7 +9,8 @@ import AdminSubscribers from './pages/AdminSubscribers.js';
 
 import EditProduct from './pages/EditProduct.js';
 import Analytics from './pages/Analytics.js'; // ✅ Make sure this exists
-import ProductCreate from './pages/ProductCreate.js';
+
+import AddProduct from './pages/AddProduct.js';
 
 function App() {
   return (
@@ -45,7 +46,7 @@ function App() {
 
         <Route path="/admin/products/create" element={
           <AdminRoute>
-            <ProductCreate />
+            <AddProduct />
           </AdminRoute>
         } />
 
