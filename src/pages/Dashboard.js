@@ -62,6 +62,14 @@ function Dashboard() {
   }
 };
 
+const handleLogout = async () => {
+  await fetch('/api/auth/logout', {
+    method: 'POST',
+    credentials: 'include'
+  });
+  window.location.href = '/login'; // or use navigate()
+};
+
 
   // Function to close sidebar (useful for mobile overlay)
   const closeSidebar = () => {
@@ -339,9 +347,12 @@ useEffect(() => {
                     <Settings className="w-4 h-4 mr-2" /> Settings
                   </a>
                   <div className="border-t border-gray-100 my-1"></div>
-                  <a href="dcd" className="block px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center transition-colors duration-150">
-                    <LogOut className="w-4 h-4 mr-2" /> Sign Out
-                  </a>
+                 <button
+  onClick={handleLogout}
+  className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 flex items-center transition-colors duration-150"
+>
+  <LogOut className="w-4 h-4 mr-2" /> Sign Out
+</button>
                 </div>
               )}
             </div>
