@@ -33,7 +33,7 @@ const AddProduct = () => {
     }
 
     try {
-      await axios.post('https://gsi-backend-1.onrender.com/api/getproducts/createproduct', data);
+      await axios.post('https://gsi-backend-1.onrender.com/api/products/create', data);
       alert('Product added successfully!');
       navigate('/admin/products'); // Redirect back to product list
     } catch (err) {
