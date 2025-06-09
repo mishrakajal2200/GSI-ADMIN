@@ -28,7 +28,7 @@ const EditProductModal = ({ product, onClose, onUpdate }) => {
       const token = localStorage.getItem('token');
   const BACKEND_URL = "https://gsi-backend-1.onrender.com";
       const res = await axios.put(
-        `${BACKEND_URL}/api/getproducts/adminedit/${product._id}`,
+        `${BACKEND_URL}/api/getproducts/${product._id}`,
         formData,
          {
       headers: {
