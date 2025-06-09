@@ -41,8 +41,8 @@ const AddProduct = () => {
     data,
     {
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
+         'Content-Type': 'multipart/form-data',
       }
     }
   );
