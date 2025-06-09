@@ -63,12 +63,26 @@ function Dashboard() {
 };
 
 const handleLogout = async () => {
-  await fetch('/api/auth/logout', {
-    method: 'POST',
-    credentials: 'include'
-  });
-  window.location.href = '/'; // or use navigate()
+  try {
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include', // Required if using cookies
+    });
+
+    // Clear everything on frontend
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    sessionStorage.clear();
+
+    // Optional: if using Context or Redux, clear the user state here too
+
+    // Navigate to login page
+    window.location.href = '/'; // or use navigate('/login') in React Router
+  } catch (err) {
+    console.error('Logout failed:', err);
+  }
 };
+
 
 
   // Function to close sidebar (useful for mobile overlay)
