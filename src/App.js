@@ -44,7 +44,7 @@ function App() {
           </AdminRoute>
         } />
 
-        <Route path="/admin/products" element={
+        <Route path="/admin/products/create" element={
           <AdminRoute>
             <AddProduct />
           </AdminRoute>
