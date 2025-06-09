@@ -19,8 +19,12 @@ const EditProduct = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await axios.get(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`);
-      setFormData(res.data);
+      try {
+        const res = await axios.get(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`);
+        setFormData(res.data);
+      } catch (err) {
+        console.error('Failed to fetch product:', err);
+      }
     };
     fetchProduct();
   }, [id]);
@@ -42,28 +46,71 @@ const EditProduct = () => {
 
     try {
       await axios.put(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`, data);
-      alert('Product updated!');
+      alert('✅ Product updated!');
       navigate('/admin/products');
     } catch (err) {
       console.error('Update failed:', err);
-      alert('Update error.');
+      alert('❌ Update error.');
     }
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow">
-      <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
-      <form onSubmit={handleUpdate} className="space-y-4" encType="multipart/form-data">
-        <input name="name" value={formData.name} onChange={handleChange} required className="input" />
-        <input name="brand" value={formData.brand} onChange={handleChange} required className="input" />
-        <input name="mainCategory" value={formData.mainCategory} onChange={handleChange} className="input" />
-        <input name="subCategory" value={formData.subCategory} onChange={handleChange} className="input" />
-        <input name="subSubCategory" value={formData.subSubCategory} onChange={handleChange} className="input" />
-        <input name="price" type="number" value={formData.price} onChange={handleChange} required className="input" />
-        <input name="mrp" type="number" value={formData.mrp} onChange={handleChange} required className="input" />
-        <textarea name="description" value={formData.description} onChange={handleChange} className="input" />
-        <input name="image" type="file" onChange={handleChange} className="input" />
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">Update Product</button>
+    <div className="max-w-4xl mx-auto p-6 sm:p-10 bg-white rounded-2xl shadow-lg mt-10">
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Edit Product</h2>
+
+      <form onSubmit={handleUpdate} className="grid grid-cols-1 sm:grid-cols-2 gap-6" encType="multipart/form-data">
+        {[
+          { name: 'name', label: 'Product Name' },
+          { name: 'brand', label: 'Brand' },
+          { name: 'mainCategory', label: 'Main Category' },
+          { name: 'subCategory', label: 'Sub Category' },
+          { name: 'subSubCategory', label: 'Sub Sub Category' },
+          { name: 'price', label: 'Price', type: 'number' },
+          { name: 'mrp', label: 'MRP', type: 'number' }
+        ].map(({ name, label, type = 'text' }) => (
+          <div key={name} className="flex flex-col">
+            <label className="mb-1 text-sm font-medium text-gray-700">{label}</label>
+            <input
+              type={type}
+              name={name}
+              value={formData[name]}
+              onChange={handleChange}
+              required
+              className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+        ))}
+
+        <div className="col-span-1 sm:col-span-2 flex flex-col">
+          <label className="mb-1 text-sm font-medium text-gray-700">Description</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows={4}
+            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="col-span-1 sm:col-span-2 flex flex-col">
+          <label className="mb-1 text-sm font-medium text-gray-700">Image</label>
+          <input
+            type="file"
+            name="image"
+            accept="image/*"
+            onChange={handleChange}
+            className="border border-gray-300 rounded-md px-4 py-2"
+          />
+        </div>
+
+        <div className="col-span-1 sm:col-span-2 text-center">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full shadow-md text-sm sm:text-base font-semibold transition-all duration-300"
+          >
+            🚀 Update Product
+          </button>
+        </div>
       </form>
     </div>
   );
