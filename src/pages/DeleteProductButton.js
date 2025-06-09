@@ -6,7 +6,7 @@ const DeleteProductButton = ({ productId, onDelete }) => {
     if (!window.confirm('Are you sure you want to delete this product?')) return;
 
     try {
-      await axios.delete(`https://gsi-backend-1.onrender.com/api/getproducts/${productId}`);
+      await axios.delete(`https://gsi-backend-1.onrender.com/api/getproducts/delete/${productId}`);
       onDelete(); // Update UI
     } catch (err) {
       console.error('Failed to delete product:', err);
