@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const EditProduct = () => {
-  const { id } = useParams();
+  const { productId } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
@@ -20,14 +20,14 @@ const EditProduct = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const res = await axios.get(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`);
+        const res = await axios.get(`https://gsi-backend-1.onrender.com/api/getproducts/${productId}`);
         setFormData(res.data);
       } catch (err) {
         console.error('Failed to fetch product:', err);
       }
     };
     fetchProduct();
-  }, [id]);
+  }, [productId]);
 
   const handleChange = (e) => {
     if (e.target.name === 'image') {
@@ -45,7 +45,7 @@ const EditProduct = () => {
     }
 
     try {
-      await axios.put(`https://gsi-backend-1.onrender.com/api/getproducts/${id}`, data);
+      await axios.put(`https://gsi-backend-1.onrender.com/api/getproducts/${productId}`, data);
       alert('✅ Product updated!');
       navigate('/admin/products');
     } catch (err) {
