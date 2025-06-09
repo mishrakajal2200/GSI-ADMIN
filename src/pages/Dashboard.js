@@ -211,7 +211,7 @@ useEffect(() => {
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-800 text-gray-200 shadow-2xl transform transition-transform duration-300 ease-in-out rounded-r-3xl
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-           lg:h-auto lg:w-64
+           h-screen overflow-y-auto lg:h-auto lg:w-64
         `}
       >
        <div className="p-6 border-b border-gray-700">
