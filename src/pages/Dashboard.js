@@ -67,7 +67,7 @@ const handleLogout = async () => {
     method: 'POST',
     credentials: 'include'
   });
-  window.location.href = '/login'; // or use navigate()
+  window.location.href = '/'; // or use navigate()
 };
 
 
