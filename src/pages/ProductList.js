@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DeleteProductButton from './DeleteProductButton';
+import EditProductModal from './EditProductModal';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [editProduct, setEditProduct] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -39,6 +41,19 @@ const ProductList = () => {
 
   {error && <p className="text-red-500 mb-4">{error}</p>}
 
+  {editProduct && (
+  <EditProductModal
+    product={editProduct}
+    onClose={() => setEditProduct(null)}
+    onUpdate={(updatedProduct) =>
+      setProducts((prev) =>
+        prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p))
+      )
+    }
+  />
+)}
+
+
   {products.length === 0 ? (
     <p className="text-gray-600 text-center text-lg">No products found.</p>
   ) : (
@@ -64,11 +79,12 @@ const ProductList = () => {
 
           <div className="flex justify-between gap-2">
            <button
-  onClick={() => navigate(`/admin/products/${product._id}/edit`)}
+  onClick={() => setEditProduct(product)}
   className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg text-sm font-medium"
 >
   ✏️ Edit
 </button>
+
 
 <DeleteProductButton
   productId={product._id}

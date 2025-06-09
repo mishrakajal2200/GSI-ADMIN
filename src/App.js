@@ -7,7 +7,7 @@ import ProductList from './pages/ProductList';
 import UserList from './pages/UserList';
 import AdminSubscribers from './pages/AdminSubscribers.js';
 
-import EditProduct from './pages/EditProduct.js';
+
 import Analytics from './pages/Analytics.js'; // ✅ Make sure this exists
 
 import AddProduct from './pages/AddProduct.js';
@@ -50,12 +50,7 @@ function App() {
           </AdminRoute>
         } />
 
-        <Route path="/admin/products/:id/edit" element={
-          <AdminRoute>
-            <EditProduct />
-          </AdminRoute>
-        } />
-
+        
         <Route path="/admin/analytics" element={
           <AdminRoute>
             <Analytics />
