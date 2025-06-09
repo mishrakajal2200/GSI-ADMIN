@@ -51,6 +51,7 @@ function App() {
         } />
 
         
+
         <Route path="/admin/analytics" element={
           <AdminRoute>
             <Analytics />

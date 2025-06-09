@@ -26,7 +26,7 @@ const EditProductModal = ({ product, onClose, onUpdate }) => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `https://gsi-backend-1.onrender.com/api/getproducts/adminedit/${product._id}/edit`,
+        `https://gsi-backend-1.onrender.com/api/getproducts/${product._id}`,
         formData
       );
       onUpdate(res.data); // update in list
