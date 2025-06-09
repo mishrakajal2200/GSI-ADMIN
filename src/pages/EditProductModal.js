@@ -25,9 +25,17 @@ const EditProductModal = ({ product, onClose, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem('token');
+  const BACKEND_URL = "https://gsi-backend-1.onrender.com";
       const res = await axios.put(
-        `https://gsi-backend-1.onrender.com/api/getproducts/${product._id}`,
-        formData
+        `${BACKEND_URL}/api/getproducts/adminedit/${product._id}`,
+        formData,
+         {
+      headers: {
+        Authorization: `Bearer ${token}`,
+         'Content-Type': 'multipart/form-data',
+      }
+    }
       );
       onUpdate(res.data); // update in list
       onClose(); // close modal
