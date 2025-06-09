@@ -211,7 +211,7 @@ useEffect(() => {
       <aside
         className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-800 text-gray-200 shadow-2xl transform transition-transform duration-300 ease-in-out rounded-r-3xl
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-          lg:static lg:h-auto lg:w-64
+           lg:h-auto lg:w-64
         `}
       >
        <div className="p-6 border-b border-gray-700">
@@ -277,7 +277,7 @@ useEffect(() => {
       )}
 
       {/* Main content area */}
-      <div className={`flex-1 flex flex-col w-full lg:w-screen transition-all duration-300 ease-in-out
+      <div className={`flex-1 flex flex-col w-full mx-auto lg:w-screen transition-all duration-300 ease-in-out
         ${isSidebarOpen ? 'ml-0' : 'ml-0 lg:ml-0'}
       `}>
         {/* Header */}
