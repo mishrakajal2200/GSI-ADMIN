@@ -33,13 +33,26 @@ const AddProduct = () => {
     }
 
     try {
-      await axios.post('https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/create', data);
-      alert('Product added successfully!');
-      navigate('/admin/products'); // Redirect back to product list
-    } catch (err) {
-      console.error('Add product failed:', err);
-      alert('Error adding product.');
+  const token = localStorage.getItem('token');
+  const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+
+  await axios.post(
+    `${BACKEND_URL}/api/getproducts/adminroutes/create`,
+    data,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
     }
+  );
+
+  alert('Product added successfully!');
+  navigate('/admin/products'); // Redirect back to product list
+} catch (err) {
+  console.error('Add product failed:', err);
+  alert('Error adding product.');
+}
   };
 
   return (
