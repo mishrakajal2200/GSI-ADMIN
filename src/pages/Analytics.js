@@ -8,6 +8,7 @@ const Analytics = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
+        
         const response = await axios.get("https://gsi-backend-1.onrender.com/api/auth");
         const users = response.data;
         setTotalUsers(users.length);
