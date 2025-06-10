@@ -37,7 +37,7 @@ const AddProduct = () => {
   const BACKEND_URL = "https://gsi-backend-1.onrender.com";
 
   await axios.post(
-    `${BACKEND_URL}/api/getproducts/create`,
+    `${BACKEND_URL}/api/getproducts/adminroutes/create`,
     data,
     {
       headers: {
