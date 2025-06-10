@@ -181,12 +181,18 @@ const handleUpload = async () => {
   };
 
   const handleFileChange = (e) => {
-    const selected = e.target.files[0];
-    if (selected) {
-      setFile(selected);
-      handleUpload(); // upload immediately after selecting
-    }
-  };
+  const selected = e.target.files[0];
+
+  // ✅ Check for valid CSV file
+  if (!selected || selected.type !== 'text/csv') {
+    alert('Please upload a valid CSV file');
+    return;
+  }
+
+  setFile(selected);
+  handleUpload(); // upload immediately after selecting
+};
+
 
 
   
