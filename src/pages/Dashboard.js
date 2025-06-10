@@ -1,5 +1,5 @@
 
-import React,{useState,useEffect } from 'react';
+import React,{useState,useEffect,useRef } from 'react';
 import axios from 'axios';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Home, BarChart2, ShoppingCart, Users, Settings, Search, Bell, User, ChevronDown, DollarSign, Package, CreditCard, Activity, Menu, LogOut, MessageSquare, Upload, Download, Mail, ChevronRight } from 'lucide-react';
@@ -41,7 +41,8 @@ function Dashboard() {
    const [stats, setStats] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMoreOrders, setHasMoreOrders] = useState(true);
-
+  const [file, setFile] = useState(null);
+  const inputRef = useRef(null);
   
   const handleLoadMore = async () => {
   const nextPage = currentPage + 1;
@@ -118,17 +119,77 @@ const handleLogout = async () => {
 
 
 
+
+
   // Function to handle export action
-  const handleExport = () => {
-    console.log('Export button clicked!');
-    alert('Export functionality would be implemented here!');
-  };
+ const handleExport = async () => {
+  const token = localStorage.getItem('token');
+
+  try {
+    const res = await fetch('https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/export', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+
+    const blob = await res.blob();
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'products.csv';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error('Export failed:', error);
+    alert('Failed to export products.');
+  }
+};
+
 
   // Function to handle import action
-  const handleImport = () => {
-    console.log('Import button clicked!');
-    alert('Import functionality would be implemented here!');
+const handleUpload = async () => {
+    if (!file) {
+      inputRef.current.click(); // open file picker if no file selected
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const token = localStorage.getItem('token');
+      const res = await axios.post(
+        `https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/import`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data',
+          }
+        }
+      );
+
+      alert(`✅ ${res.data.count} products imported successfully!`);
+      setFile(null); // reset file
+    } catch (err) {
+      console.error('Import failed:', err);
+      alert('Failed to import.');
+    }
   };
+
+  const handleFileChange = (e) => {
+    const selected = e.target.files[0];
+    if (selected) {
+      setFile(selected);
+      handleUpload(); // upload immediately after selecting
+    }
+  };
+
+
+  
  useEffect(() => {
     const user = JSON.parse(localStorage.getItem('adminUser'));
     if (!user || user.role !== 'admin') {
@@ -329,13 +390,25 @@ useEffect(() => {
               <span className="hidden md:block">Export</span>
             </button>
             {/* Import Button */}
-            <button
-              className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full shadow-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center space-x-2 text-sm font-semibold transform hover:scale-105"
-              onClick={handleImport}
-            >
-              <Upload className="w-4 h-4" />
-              <span className="hidden md:block">Import</span>
-            </button>
+            <div className="flex items-center gap-4">
+      {/* Hidden file input */}
+      <input
+        type="file"
+        accept=".csv"
+        ref={inputRef}
+        onChange={handleFileChange}
+        style={{ display: 'none' }}
+      />
+
+      {/* Styled button that triggers file input */}
+      <button
+        className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full shadow-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center space-x-2 text-sm font-semibold transform hover:scale-105"
+        onClick={() => inputRef.current.click()}
+      >
+        <Upload className="w-4 h-4" />
+        <span className="hidden md:block">Import</span>
+      </button>
+    </div>
 
             <button className="p-2 rounded-full text-gray-600 hover:bg-gray-100 transition-colors duration-200 relative" aria-label="Notifications">
               <Bell className="w-6 h-6" />
