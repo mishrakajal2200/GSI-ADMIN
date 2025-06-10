@@ -8,8 +8,14 @@ const Analytics = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        
-        const response = await axios.get("https://gsi-backend-1.onrender.com/api/auth");
+        const token = localStorage.getItem("token");
+        const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+        const response = await axios.get(`${BACKEND_URL}/api/auth`,{
+      headers: {
+        Authorization: `Bearer ${token}`,
+         'Content-Type': 'application/json',
+      }
+    });
         const users = response.data;
         setTotalUsers(users.length);
         const adminCount = users.filter(user => user.role === 'admin').length;
