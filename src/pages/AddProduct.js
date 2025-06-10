@@ -25,35 +25,45 @@ const AddProduct = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const data = new FormData();
-    for (const key in formData) {
-      data.append(key, formData[key]);
-    }
+  const data = new FormData();
+  data.append('name', formData.name);
+  data.append('brand', formData.brand);
+  data.append('mainCategory', formData.mainCategory);
+  data.append('subCategory', formData.subCategory);
+  data.append('subSubCategory', formData.subSubCategory);
+  data.append('price', Number(formData.price));
+  data.append('mrp', Number(formData.mrp));
+  data.append('description', formData.description);
 
-    try {
-  const token = localStorage.getItem('token');
-  const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+  if (formData.image) {
+    data.append('image', formData.image);
+  }
 
-  await axios.post(
-    `${BACKEND_URL}/api/getproducts/adminroutes/create`,
-    data,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-         'Content-Type': 'multipart/form-data',
+  try {
+    const token = localStorage.getItem('token');
+    const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+
+    await axios.post(
+      `${BACKEND_URL}/api/getproducts/adminroutes/create`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        }
       }
-    }
-  );
+    );
 
-  alert('Product added successfully!');
-  navigate('/admin/products'); // Redirect back to product list
-} catch (err) {
-  console.error('Add product failed:', err);
-  alert('Error adding product.');
-}
-  };
+    alert('Product added successfully!');
+    navigate('/admin/products');
+  } catch (err) {
+    console.error('Add product failed:', err.response?.data || err.message);
+    alert('Error adding product.');
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
