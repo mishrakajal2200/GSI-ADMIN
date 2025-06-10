@@ -277,6 +277,7 @@ useEffect(() => {
       const res = await axios.get(`${BACKEND_URL}/api/admin/orders/recent?page=1`, {
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-Type':"application/json"
         },
       });
 
