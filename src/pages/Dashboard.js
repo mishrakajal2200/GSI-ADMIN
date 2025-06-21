@@ -90,8 +90,6 @@ function Dashboard() {
   const [hasMoreOrders, setHasMoreOrders] = useState(true);
   const [file, setFile] = useState(null);
   const inputRef = useRef(null);
-  const [selectedOrder, setSelectedOrder] = useState(null);
-  const [showModal, setShowModal] = useState(false);
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
@@ -250,14 +248,6 @@ function Dashboard() {
       window.location.href = "/admin-login";
     }
   }, []);
-
-
-  const viewOrderDetails = (id) => {
-  const order = allOrders.find((order) => order._id === id);
-  setSelectedOrder(order);
-  setShowModal(true);
-};
-
 
   // Dashboard.js (or wherever you do the fetch)
   useEffect(() => {
@@ -739,170 +729,111 @@ function Dashboard() {
       </div>
 
       {/* recent orders */}
-     
-<div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
-  <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
-    Recent Orders
-  </h3>
+      <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
+          Recent Orders
+        </h3>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-xl">
+                  Order ID
+                </th>
+                <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Customer
+                </th>
+                <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-xl">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-100">
+              {loading && allOrders.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan="4"
+                    className="text-center py-6 sm:py-8 text-sm text-gray-500"
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      <svg className="animate-spin h-5 w-5 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      <span>Loading orders...</span>
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+                allOrders.map((order) => (
+                  <tr
+                    key={order._id}
+                    className="hover:bg-indigo-50 transition-colors duration-150"
+                  >
+                    <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {order._id}
+                    </td>
+                    <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-center text-gray-700">
+                      {order.customer}
+                    </td>
 
-  <div className="overflow-x-auto">
-    <table className="min-w-full divide-y divide-gray-200">
-      {/* Table Head */}
-      <thead className="bg-gray-50 border-b border-gray-200">
-        <tr>
-          <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-xl">
-            Order ID
-          </th>
-          <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Customer
-          </th>
-          <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Status
-          </th>
-          <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Action
-          </th>
-          <th className="px-3 py-3 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-xl">
-            Amount
-          </th>
-        </tr>
-      </thead>
+                    <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm">
+                      <select
+                        value={order.status}
+                        onChange={(e) => {
+                          if (order._id) {
+                            updateStatus(order._id, e.target.value);
+                          } else {
+                            console.error(
+                              "❌ order._id is undefined",
+                              order
+                            );
+                          }
+                        }}
+                        className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
+                      >
+                        {[
+                          "Pending",
+                          "Processing",
+                          "Shipped",
+                          "Completed",
+                        ].map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
 
-      {/* Table Body */}
-      <tbody className="bg-white divide-y divide-gray-100">
-        {loading && allOrders.length === 0 ? (
-          <tr>
-            <td colSpan="5" className="text-center py-6 sm:py-8 text-sm text-gray-500">
-              <div className="flex items-center justify-center space-x-2">
-                <svg
-                  className="animate-spin h-5 w-5 text-indigo-500"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                <span>Loading orders...</span>
-              </div>
-            </td>
-          </tr>
-        ) : (
-          allOrders.map((order) => (
-            <tr key={order._id} className="hover:bg-indigo-50 transition-colors duration-150">
-              {/* Order ID */}
-              <td className="px-3 py-3 text-sm font-medium text-gray-900">
-                {order._id || "N/A"}
-              </td>
-
-              {/* Customer Name */}
-              <td className="px-3 py-3 text-sm text-gray-700">
-                {order.user?.name || "N/A"}
-              </td>
-
-              {/* Status Dropdown */}
-              <td className="px-3 py-3 text-sm">
-                <select
-                  value={order.status}
-                  onChange={(e) => updateStatus(order._id, e.target.value)}
-                  className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
-                >
-                  {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </td>
-
-              {/* Action Button */}
-              <td className="px-3 py-3 text-sm text-center text-indigo-600">
-                <button
-                  onClick={() => viewOrderDetails(order._id)}
-                  className="hover:underline font-medium"
-                >
-                  View
-                </button>
-              </td>
-
-              {/* Total Price */}
-              <td className="px-3 py-3 text-sm text-center text-gray-700">
-                ₹{order.totalPrice || "N/A"}
-              </td>
-            </tr>
-          ))
+                    <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-center text-sm text-gray-700">
+                      {order.amount}
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+        {/* Load More Button */}
+        {hasMoreOrders && (
+          <div className="mt-4 sm:mt-6 text-center">
+            <button
+              onClick={handleLoadMore}
+              className="px-5 py-2 sm:px-6 sm:py-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-full shadow-md hover:from-indigo-600 hover:to-blue-700 transition-colors duration-200 text-sm font-semibold"
+            >
+              Load More Orders
+            </button>
+          </div>
         )}
-
-        {/* No Orders */}
-        {!loading && allOrders.length === 0 && (
-          <tr>
-            <td colSpan="5" className="text-center py-6 sm:py-8 text-sm text-gray-500">
-              No recent orders found.
-            </td>
-          </tr>
+        {!hasMoreOrders && (
+          <div className="mt-4 sm:mt-6 text-center text-gray-600 text-xs sm:text-sm py-2 px-4 bg-gray-50 rounded-full inline-block">
+            ✨ All caught up! No more orders to load.
+          </div>
         )}
-      </tbody>
-    </table>
-  </div>
-
-  {/* Load More Button */}
-  {hasMoreOrders && (
-    <div className="mt-4 sm:mt-6 text-center">
-      <button
-        onClick={handleLoadMore}
-        disabled={loading}
-        className={`px-5 py-2 sm:px-6 sm:py-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-full shadow-md hover:from-indigo-600 hover:to-blue-700 transition-colors duration-200 text-sm font-semibold
-          ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-      >
-        {loading ? "Loading..." : "Load More Orders"}
-      </button>
-    </div>
-  )}
-
-
-  {showModal && selectedOrder && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    <div className="bg-white p-6 rounded-xl w-full max-w-md">
-      <h2 className="text-lg font-semibold mb-4">Order Details</h2>
-      <p><strong>Order ID:</strong> {selectedOrder._id}</p>
-      <p><strong>Customer:</strong> {selectedOrder.user?.name || "N/A"}</p>
-      <p><strong>Status:</strong> {selectedOrder.status}</p>
-      <p><strong>Total Price:</strong> ₹{selectedOrder.totalPrice}</p>
-
-      {/* Add more fields as needed */}
-
-      <div className="mt-4 text-right">
-        <button
-          onClick={() => setShowModal(false)}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-        >
-          Close
-        </button>
       </div>
-    </div>
-  </div>
-)}
-
-
-  {/* All caught up message */}
-  {!hasMoreOrders && allOrders.length > 0 && (
-    <div className="mt-4 sm:mt-6 text-center text-gray-600 text-xs sm:text-sm py-2 px-4 bg-gray-50 rounded-full inline-block">
-      ✨ All caught up! No more orders to load.
-    </div>
-  )}
-</div>
-
 
       {/* Recent Activities */}
       <div className="lg:col-span-1 bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
