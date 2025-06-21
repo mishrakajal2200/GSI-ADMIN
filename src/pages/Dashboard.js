@@ -743,13 +743,13 @@ function Dashboard() {
             Order ID
           </th>
           <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Customer User ID {/* Changed header to reflect what's shown */}
+            Customer {/* Changed header back to Customer */}
           </th>
           <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
             Status
           </th>
           <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-xl">
-            Total Amount
+            Amount
           </th>
         </tr>
       </thead>
@@ -780,12 +780,13 @@ function Dashboard() {
                 {order._id?.toString() || 'N/A'}
               </td>
               <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-center text-gray-700">
-                {/* Display user ObjectId as string, or fallback */}
-                {order.user?.toString() || 'N/A'}
+                {/* Access order.user.name. This requires backend to populate 'user' field. */}
+                {order.user?.name || 'N/A'}
                 {/*
-                  FOR A REAL APP: If your backend populates 'user' field with user details,
-                  you'd typically use: {order.user?.name || 'N/A'}
-                  Make sure your simulated data also reflects this if you're using it.
+                  IMPORTANT: If 'order.user.name' is still showing 'N/A' or undefined,
+                  it means your backend is NOT populating the 'user' field.
+                  You MUST update your backend order fetching logic to use .populate('user', 'name')
+                  or similar for your ODM/ORM.
                 */}
               </td>
               <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm">
