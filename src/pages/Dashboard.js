@@ -490,7 +490,7 @@ function Dashboard() {
   `}
 >
   {/* Header */}
-  <header className="bg-white/90 backdrop-blur-sm shadow-lg p-4 flex items-center justify-center max-w-md sticky top-0 z-40 rounded-b-3xl border-b border-gray-100">
+  <header className="bg-white/90 backdrop-blur-sm shadow-lg p-4 flex items-center justify-center sticky top-0 z-40 rounded-b-3xl border-b border-gray-100">
     <button
       className="p-2 rounded-md text-gray-600 hover:bg-gray-100 transition-colors duration-200" // Only show on smaller screens if sidebar is hidden
       onClick={() => setIsSidebarOpen(!isSidebarOpen)}
