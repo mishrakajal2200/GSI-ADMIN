@@ -477,7 +477,7 @@ function Dashboard() {
       {/* Backdrop for mobile sidebar */}
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-60 z-40 lg:hidden animate-fade-in"
+          className="fixed inset-0 bg-black bg-opacity-60 z-40 animate-fade-in"
           onClick={closeSidebar}
         ></div>
       )}
