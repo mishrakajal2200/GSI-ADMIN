@@ -729,7 +729,8 @@ function Dashboard() {
       </div>
 
       {/* recent orders */}
-      {/* recent orders */}
+     
+{/* recent orders */}
 <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
   <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
     Recent Orders
@@ -742,13 +743,13 @@ function Dashboard() {
             Order ID
           </th>
           <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-            Customer
+            Customer User ID {/* Changed header to reflect what's shown */}
           </th>
           <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
             Status
           </th>
           <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-xl">
-            Amount
+            Total Amount
           </th>
         </tr>
       </thead>
@@ -770,39 +771,48 @@ function Dashboard() {
           // If not loading OR if orders exist, map and display them
           allOrders.map((order) => (
             <tr
-              key={order._id} // Ensure _id is always unique and present
+              // Using optional chaining and toString() for robust _id access
+              key={order._id?.toString() || `fallback-${Math.random()}`}
               className="hover:bg-indigo-50 transition-colors duration-150"
             >
               <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm font-medium text-gray-900">
-                {/* Fallback to 'N/A' if order._id is null/undefined */}
-                {order._id || 'N/A'}
+                {/* Access _id and convert to string, or fallback */}
+                {order._id?.toString() || 'N/A'}
               </td>
               <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm text-center text-gray-700">
-                {/* Fallback to 'N/A' if order.customer is null/undefined */}
-                {order.customer || 'N/A'}
+                {/* Display user ObjectId as string, or fallback */}
+                {order.user?.toString() || 'N/A'}
+                {/*
+                  FOR A REAL APP: If your backend populates 'user' field with user details,
+                  you'd typically use: {order.user?.name || 'N/A'}
+                  Make sure your simulated data also reflects this if you're using it.
+                */}
               </td>
               <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-sm">
                 <select
-                  value={order.status}
+                  // Ensure value is controlled; use '' if order.status is null/undefined
+                  value={order.status || ''}
                   onChange={(e) => {
+                    // Pass order._id as a string to updateStatus
                     if (order._id) {
-                      updateStatus(order._id, e.target.value);
+                      updateStatus(order._id.toString(), e.target.value);
                     } else {
-                      console.error("❌ order._id is undefined", order);
+                      console.error("❌ order._id is undefined for updateStatus", order);
                     }
                   }}
                   className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
                 >
-                  {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
-                    <option key={status} value={status}>
-                      {status}
+                  {/* Renamed map variable to statusOption to avoid confusion */}
+                  {["Pending", "Processing", "Shipped", "Completed"].map((statusOption) => (
+                    <option key={statusOption} value={statusOption}>
+                      {statusOption}
                     </option>
                   ))}
                 </select>
               </td>
               <td className="px-3 py-2 sm:px-4 sm:py-3 whitespace-nowrap text-center text-sm text-gray-700">
-                {/* Fallback to 'N/A' if order.amount is null/undefined */}
-                {order.amount || 'N/A'}
+                {/* Access totalPrice and format it as currency, or fallback */}
+                {typeof order.totalPrice === 'number' ? `$${order.totalPrice.toFixed(2)}` : 'N/A'}
               </td>
             </tr>
           ))
