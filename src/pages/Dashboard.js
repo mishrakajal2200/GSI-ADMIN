@@ -729,7 +729,7 @@ function Dashboard() {
       </div>
 
       {/* recent orders */}
-      (
+
     <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
       <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
         Recent Orders
