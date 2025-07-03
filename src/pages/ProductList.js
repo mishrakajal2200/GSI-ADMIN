@@ -13,7 +13,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('https://gsi-backend-1.onrender.com/api/getproducts/products');
+        const res = await axios.get('https://www.gsienterprises.com/api/getproducts/products');
         setProducts(res.data);
       } catch (err) {
         setError('Failed to fetch products. Please try again later.');
