@@ -188,7 +188,7 @@ function Dashboard() {
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.href = url;
-      link.download = "products.csv";
+      link.download = "products.xlsx";
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -347,68 +347,6 @@ function Dashboard() {
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
-      {/* Sidebar */}
-      {/* <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-800 text-gray-200 shadow-2xl transform transition-transform duration-300 ease-in-out rounded-r-3xl
-          ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
-           h-screen overflow-y-auto lg:h-auto lg:w-64
-        `}
-      >
-        <div className="p-6 border-b border-gray-700">
-          <img
-            src="/bhumi.png" // Replace with the correct path
-            alt="Admin Logo"
-            className="h-12 w-auto mx-auto" // Adjust height/width as needed
-          />
-        </div>
-
-        <nav className="mt-8">
-          <Link
-            to="/admin/dashboard"
-            className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
-          >
-            <Home className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-            Dashboard
-          </Link>
-          <Link
-            to="/admin/analytics"
-            className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
-          >
-            <BarChart2 className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-            Analytics
-          </Link>
-          <Link
-            to="/admin/products"
-            className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
-          >
-            <ShoppingCart className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-            Products
-          </Link>
-          <Link
-            to="/admin/auth"
-            className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
-          >
-            <Users className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-            Users
-          </Link>
-          <Link
-            to="/admin/subscribers"
-            className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
-          >
-            <Mail className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-            Subscribers
-          </Link>
-          <Link
-            to="/admin/setting"
-            className="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-indigo-400 transition-all duration-200 rounded-xl mx-3 my-2 font-medium group"
-          >
-            <Settings className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
-            Settings
-          </Link>
-        </nav>
-
-      </aside> */}
-{/* Sidebar */}
 <aside
   className={`fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-900 to-gray-800 text-white shadow-2xl transform transition-transform duration-300 ease-in-out rounded-r-3xl
     ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
