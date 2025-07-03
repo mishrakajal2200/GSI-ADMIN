@@ -199,6 +199,7 @@ function Dashboard() {
   };
 
   // Function to handle import action
+  // eslint-disable-next-line no-unused-vars
   const handleUpload = async () => {
     if (!file) {
       inputRef.current.click(); // open file picker if no file selected
@@ -230,17 +231,36 @@ function Dashboard() {
   };
 
   const handleFileChange = (e) => {
-    const selected = e.target.files[0];
+  const selected = e.target.files[0];
 
-    // ✅ Check for valid CSV file
-    if (!selected || selected.type !== "text/csv") {
-      alert("Please upload a valid CSV file");
-      return;
-    }
+  if (!selected || selected.name.split('.').pop() !== 'xlsx') {
+    alert("Please upload a valid Excel (.xlsx) file");
+    return;
+  }
 
-    setFile(selected);
-    handleUpload(); // upload immediately after selecting
-  };
+  const formData = new FormData();
+  formData.append("file", selected);
+
+  const token = localStorage.getItem("token");
+
+  fetch("https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/import", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      alert("Imported successfully!");
+      console.log(data);
+    })
+    .catch((err) => {
+      alert("Failed to import");
+      console.error(err);
+    });
+};
+
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("adminUser"));
@@ -457,21 +477,19 @@ function Dashboard() {
       <div className="flex items-center gap-2 sm:gap-4">
         {/* Hidden file input */}
         <input
-          type="file"
-          accept=".csv"
-          ref={inputRef}
-          onChange={handleFileChange}
-          style={{ display: "none" }}
-        />
-
-        {/* Styled button that triggers file input */}
-        <button
-          className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-full shadow-lg hover:from-emerald-600 hover:to-green-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm font-semibold transform hover:scale-105"
-          onClick={() => inputRef.current.click()}
-        >
-          <Upload className="w-4 h-4" />
-          <span className="hidden md:block">Import</span>
-        </button>
+    type="file"
+    accept=".xlsx"
+    ref={inputRef}
+    onChange={handleFileChange}
+    style={{ display: "none" }}
+  />
+  <button
+    className="px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-emerald-500 to-green-600 text-white rounded-full shadow-lg hover:from-emerald-600 hover:to-green-700 transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm font-semibold transform hover:scale-105"
+    onClick={() => inputRef.current.click()}
+  >
+    <Upload className="w-4 h-4" />
+    <span className="hidden md:block">Import</span>
+  </button>
       </div>
 
       <button
@@ -532,71 +550,6 @@ function Dashboard() {
     </h2>
 
     {/* Stats Cards */}
-    {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
-
-      <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-        <div>
-          <p className="text-xs sm:text-sm text-gray-500 mb-1">Total Sales</p>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-            {loading ? (
-              <span className="animate-pulse bg-gray-200 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
-            ) : (
-              stats.totalSales
-            )}
-          </h3>
-        </div>
-        <div className="p-2 sm:p-3 bg-green-100 rounded-full">
-          <DollarSign className="w-7 h-7 sm:w-8 sm:h-8 text-green-600" />
-        </div>
-      </div>
-
-      <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-        <div>
-          <p className="text-xs sm:text-sm text-gray-500 mb-1">New Orders</p>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-            {newOrdersCount !== null ? newOrdersCount : (
-              <span className="animate-pulse bg-gray-200 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
-            )}
-          </h3>
-        </div>
-        <div className="p-2 sm:p-3 bg-blue-100 rounded-full">
-          <Package className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600" />
-        </div>
-      </div>
-
-      <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-        <div>
-          <p className="text-xs sm:text-sm text-gray-500 mb-1">Revenue</p>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-            {loading ? (
-              <span className="animate-pulse bg-gray-200 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
-            ) : (
-              stats.totalRevenue
-            )}
-          </h3>
-        </div>
-        <div className="p-2 sm:p-3 bg-purple-100 rounded-full">
-          <CreditCard className="w-7 h-7 sm:w-8 sm:h-8 text-purple-600" />
-        </div>
-      </div>
-
-      <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
-        <div>
-          <p className="text-xs sm:text-sm text-gray-500 mb-1">Active Users</p>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
-            {loading ? (
-              <span className="animate-pulse bg-gray-200 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
-            ) : (
-              stats.activeUsers
-            )}
-          </h3>
-        </div>
-        <div className="p-2 sm:p-3 bg-orange-100 rounded-full">
-          <Activity className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600" />
-        </div>
-      </div>
-
-    </div> */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
   {/* Total Sales */}
   <div className="bg-gradient-to-br from-green-400 via-green-500 to-green-600 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
@@ -664,7 +617,6 @@ function Dashboard() {
     </div>
   </div>
 </div>
-
 
     {/* Sales Chart, Recent Orders, and Recent Activities */}
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -891,8 +843,6 @@ function Dashboard() {
     </div>
   </main>
 </div>
-
-
     </div>
   );
 }
