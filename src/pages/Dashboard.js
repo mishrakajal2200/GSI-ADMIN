@@ -597,7 +597,7 @@ function Dashboard() {
       </div>
 
     </div> */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8 min-h-[160px] sm:min-h-[180px] transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
   {/* Total Sales */}
   <div className="bg-gradient-to-br from-green-400 via-green-500 to-green-600 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
     <div>
