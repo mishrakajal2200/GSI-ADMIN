@@ -532,7 +532,8 @@ function Dashboard() {
     </h2>
 
     {/* Stats Cards */}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+    {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+
       <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
         <div>
           <p className="text-xs sm:text-sm text-gray-500 mb-1">Total Sales</p>
@@ -548,6 +549,7 @@ function Dashboard() {
           <DollarSign className="w-7 h-7 sm:w-8 sm:h-8 text-green-600" />
         </div>
       </div>
+
       <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
         <div>
           <p className="text-xs sm:text-sm text-gray-500 mb-1">New Orders</p>
@@ -561,6 +563,7 @@ function Dashboard() {
           <Package className="w-7 h-7 sm:w-8 sm:h-8 text-blue-600" />
         </div>
       </div>
+
       <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl border border-gray-100">
         <div>
           <p className="text-xs sm:text-sm text-gray-500 mb-1">Revenue</p>
@@ -592,7 +595,76 @@ function Dashboard() {
           <Activity className="w-7 h-7 sm:w-8 sm:h-8 text-orange-600" />
         </div>
       </div>
+
+    </div> */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-8">
+  {/* Total Sales */}
+  <div className="bg-gradient-to-br from-green-400 via-green-500 to-green-600 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
+    <div>
+      <p className="text-xs sm:text-sm opacity-90 mb-1">Total Sales</p>
+      <h3 className="text-2xl sm:text-3xl font-extrabold">
+        {loading ? (
+          <span className="animate-pulse bg-white/50 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
+        ) : (
+          stats.totalSales
+        )}
+      </h3>
     </div>
+    <div className="p-2 sm:p-3 bg-white/20 rounded-full">
+      <DollarSign className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+    </div>
+  </div>
+
+  {/* New Orders */}
+  <div className="bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
+    <div>
+      <p className="text-xs sm:text-sm opacity-90 mb-1">New Orders</p>
+      <h3 className="text-2xl sm:text-3xl font-extrabold">
+        {newOrdersCount !== null ? newOrdersCount : (
+          <span className="animate-pulse bg-white/50 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
+        )}
+      </h3>
+    </div>
+    <div className="p-2 sm:p-3 bg-white/20 rounded-full">
+      <Package className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+    </div>
+  </div>
+
+  {/* Revenue */}
+  <div className="bg-gradient-to-br from-purple-400 via-purple-500 to-purple-600 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
+    <div>
+      <p className="text-xs sm:text-sm opacity-90 mb-1">Revenue</p>
+      <h3 className="text-2xl sm:text-3xl font-extrabold">
+        {loading ? (
+          <span className="animate-pulse bg-white/50 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
+        ) : (
+          stats.totalRevenue
+        )}
+      </h3>
+    </div>
+    <div className="p-2 sm:p-3 bg-white/20 rounded-full">
+      <CreditCard className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+    </div>
+  </div>
+
+  {/* Active Users */}
+  <div className="bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white p-5 sm:p-6 rounded-3xl shadow-xl flex items-center justify-between transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl">
+    <div>
+      <p className="text-xs sm:text-sm opacity-90 mb-1">Active Users</p>
+      <h3 className="text-2xl sm:text-3xl font-extrabold">
+        {loading ? (
+          <span className="animate-pulse bg-white/50 rounded-md inline-block w-20 h-7 sm:w-24 sm:h-8"></span>
+        ) : (
+          stats.activeUsers
+        )}
+      </h3>
+    </div>
+    <div className="p-2 sm:p-3 bg-white/20 rounded-full">
+      <Activity className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
+    </div>
+  </div>
+</div>
+
 
     {/* Sales Chart, Recent Orders, and Recent Activities */}
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
