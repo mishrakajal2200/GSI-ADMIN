@@ -19,7 +19,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://gsi-backend-1.onrender.com/api/admin/adminlogin/login",
+        "https://www.gsienterprises.com/api/admin/adminlogin/login",
         {
           email,
           password,
