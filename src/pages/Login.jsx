@@ -19,14 +19,11 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "https://www.gsienterprises.com/api/admin/adminlogin/login",
+        "https://gsi-backend-1.onrender.com/api/admin/adminlogin/login",
         {
           email,
           password,
-        },
-        {
-    withCredentials: true, 
-  }
+        }
       );
 
       // Check if logged-in user is admin
