@@ -26,7 +26,7 @@ const EditProductModal = ({ product, onClose, onUpdate }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('token');
-  const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+  const BACKEND_URL = "https://api.gsienterprises.com";
       const res = await axios.put(
         `${BACKEND_URL}/api/getproducts/${product._id}`,
         formData,

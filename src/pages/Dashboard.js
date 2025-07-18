@@ -93,7 +93,7 @@ function Dashboard() {
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
-    const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+    const BACKEND_URL = "https://api.gsienterprises.com";
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
@@ -142,7 +142,7 @@ function Dashboard() {
   const updateStatus = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem("token");
-      const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+      const BACKEND_URL = "https://api.gsienterprises.com";
 
       const res = await fetch(
         `${BACKEND_URL}/api/admin/orders/${orderId}/status`,
@@ -174,7 +174,7 @@ function Dashboard() {
 
     try {
       const res = await fetch(
-        "https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/export",
+        "https://api.gsienterprises.com/api/getproducts/adminroutes/export",
         {
           method: "GET",
           headers: {
@@ -212,7 +212,7 @@ function Dashboard() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/import`,
+        `https://api.gsienterprises.com/api/getproducts/adminroutes/import`,
         formData,
         {
           headers: {
@@ -243,7 +243,7 @@ function Dashboard() {
 
   const token = localStorage.getItem("token");
 
-  fetch("https://gsi-backend-1.onrender.com/api/getproducts/adminroutes/import", {
+  fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -276,7 +276,7 @@ function Dashboard() {
         // grab the token you stored at login
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "https://gsi-backend-1.onrender.com/api/payment/count",
+          "https://api.gsienterprises.com/api/payment/count",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -296,7 +296,7 @@ function Dashboard() {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+        const BACKEND_URL = "https://api.gsienterprises.com";
 
         const res = await axios.get(`${BACKEND_URL}/api/admin/stats`, {
           headers: {
@@ -319,7 +319,7 @@ function Dashboard() {
       try {
         const token = localStorage.getItem("token"); // or however you store it
         const response = await axios.get(
-          "https://gsi-backend-1.onrender.com/api/payment/all-orders",
+          "https://api.gsienterprises.com/api/payment/all-orders",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -341,7 +341,7 @@ function Dashboard() {
     const fetchRecentOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        const BACKEND_URL = "https://gsi-backend-1.onrender.com";
+        const BACKEND_URL = "https://api.gsienterprises.com";
 
         const res = await axios.get(
           `${BACKEND_URL}/api/admin/orders/recent?page=1`,

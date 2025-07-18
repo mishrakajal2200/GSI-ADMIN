@@ -43,7 +43,7 @@ const AddProduct = () => {
 
   try {
     const token = localStorage.getItem('token');
-    const BACKEND_URL = "https://www.gsienterprises.com";
+    const BACKEND_URL = "https://api.gsienterprises.com";
 
     await axios.post(
       `${BACKEND_URL}/api/getproducts/adminroutes/create`,

@@ -13,7 +13,7 @@ const UserList = () => {
   const [ setUserToDelete] = useState(null);
 
 
-  const BACKEND_URL = 'https://gsi-backend-1.onrender.com/api/auth';
+  const BACKEND_URL = 'https://api.gsienterprises.com/api/auth';
 
   useEffect(() => {
     const fetchUsers = async () => {
