@@ -200,7 +200,7 @@ function Dashboard() {
 
   // Function to handle import action
   // eslint-disable-next-line no-unused-vars
-  const handleUpload = async () => {
+   const handleUpload = async () => {
     if (!file) {
       inputRef.current.click(); // open file picker if no file selected
       return;

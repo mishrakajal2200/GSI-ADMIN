@@ -65,7 +65,7 @@ const ProductList = () => {
         >
           {product.image && (
             <img
-              src={`https://api.gsienterprises.com/${product.image}`}
+              src={`https://www.gsienterprises.com/${product.image}`}
               alt={product.name}
               className="w-full h-48 object-contain rounded-xl border"
             />
