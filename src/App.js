@@ -6,6 +6,7 @@ import Login from './pages/Login.jsx';
 import ProductList from './pages/ProductList';
 import UserList from './pages/UserList';
 import AdminSubscribers from './pages/AdminSubscribers.js';
+import QuotationPDF from './pages/QuotationPDF.js';
 
 
 import Analytics from './pages/Analytics.js'; // ✅ Make sure this exists
@@ -58,6 +59,15 @@ function App() {
                         </AdminRoute>
         } />
       </Routes>
+      
+      <Route
+  path="/admin/quotation"
+  element={
+    <AdminRoute>
+      <QuotationPDF />
+    </AdminRoute>
+  }
+/>
     </Router>
   );
 }
