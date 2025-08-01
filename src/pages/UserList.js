@@ -59,7 +59,7 @@ const handleDelete = async (id) => {
 
 
   try {
-    await axios.delete(`https://gsi-backend-1.onrender.com/api/auth/user/${id}`, {
+    await axios.delete(`https://api.gsienterprises.com/api/auth/user/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },

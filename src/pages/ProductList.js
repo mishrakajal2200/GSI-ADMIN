@@ -13,7 +13,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('https://www.gsienterprises.com/api/getproducts/products');
+        const res = await axios.get('https://api.gsienterprises.com/api/getproducts/products');
         setProducts(res.data);
       } catch (err) {
         setError('Failed to fetch products. Please try again later.');
@@ -65,7 +65,7 @@ const ProductList = () => {
         >
           {product.image && (
             <img
-              src={`https://www.gsienterprises.com/${product.image}`}
+              src={`https://api.gsienterprises.com/${product.image}`}
               alt={product.name}
               className="w-full h-48 object-contain rounded-xl border"
             />
