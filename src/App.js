@@ -12,6 +12,7 @@ import AdminSubscribers from './pages/AdminSubscribers.js';
 import Analytics from './pages/Analytics.js'; // ✅ Make sure this exists
 
 import AddProduct from './pages/AddProduct.js';
+import QuotationPDF from './pages/QuotationPDF.js';
 
 function App() {
   return (
@@ -58,6 +59,14 @@ function App() {
             <Analytics />
                         </AdminRoute>
         } />
+
+<Route path="/admin/analytics" element={
+          <AdminRoute>
+            <QuotationPDF />
+                        </AdminRoute>
+        } />
+
+
       </Routes>
       
      
