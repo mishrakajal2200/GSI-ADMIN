@@ -23,7 +23,8 @@ const Login = () => {
         {
           email,
           password,
-        }
+        },
+        {withCredentials:true}
       );
 
       // Check if logged-in user is admin
