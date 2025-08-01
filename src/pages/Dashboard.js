@@ -30,6 +30,8 @@ import {
   Download,
   Mail,
   ChevronRight,
+  FileText
+
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -429,6 +431,14 @@ function Dashboard() {
       <Settings className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
       Settings
     </Link>
+
+    <Link
+  to="/admin/quotation"
+  className="flex items-center px-6 py-3 mx-4 my-2 rounded-xl font-medium text-gray-200 hover:bg-indigo-600 hover:text-white transition-all duration-200 shadow hover:shadow-md group"
+>
+  <FileText className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+  Quotation
+</Link>
   </nav>
 </aside>
 
