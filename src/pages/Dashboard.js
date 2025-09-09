@@ -265,17 +265,22 @@ function Dashboard() {
 
 const handleFileChange = async (e) => {
   const formData = new FormData();
-  formData.append("file", e.target.files[0]); // 👈 name must match "file"
+  formData.append("file", e.target.files[0]);
+
+  const token = localStorage.getItem("token"); // 👈 wherever you stored it after login
 
   const res = await fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
     method: "POST",
     body: formData,
-    credentials: "include", // if auth cookie is required
+    headers: {
+      Authorization: `Bearer ${token}`, // 👈 REQUIRED
+    },
   });
 
   const data = await res.json();
   console.log(data);
 };
+
 
 
   useEffect(() => {
