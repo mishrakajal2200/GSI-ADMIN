@@ -232,35 +232,49 @@ function Dashboard() {
     }
   };
 
-  const handleFileChange = (e) => {
-  const selected = e.target.files[0];
+//   const handleFileChange = (e) => {
+//   const selected = e.target.files[0];
 
-  if (!selected || selected.name.split('.').pop() !== 'xlsx') {
-    alert("Please upload a valid Excel (.xlsx) file");
-    return;
-  }
+//   if (!selected || selected.name.split('.').pop() !== 'xlsx') {
+//     alert("Please upload a valid Excel (.xlsx) file");
+//     return;
+//   }
 
+//   const formData = new FormData();
+//   formData.append("file", selected);
+
+//   const token = localStorage.getItem("token");
+
+//   fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
+//     method: "POST",
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//     body: formData,
+//   })
+//     .then((res) => res.json())
+//     .then((data) => {
+//       alert("Imported successfully!");
+//       console.log(data);
+//     })
+//     .catch((err) => {
+//       alert("Failed to import");
+//       console.error(err);
+//     });
+// };
+
+const handleFileChange = async (e) => {
   const formData = new FormData();
-  formData.append("file", selected);
+  formData.append("file", e.target.files[0]); // 👈 name must match "file"
 
-  const token = localStorage.getItem("token");
-
-  fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
+  const res = await fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
     body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      alert("Imported successfully!");
-      console.log(data);
-    })
-    .catch((err) => {
-      alert("Failed to import");
-      console.error(err);
-    });
+    credentials: "include", // if auth cookie is required
+  });
+
+  const data = await res.json();
+  console.log(data);
 };
 
 
