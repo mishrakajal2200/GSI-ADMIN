@@ -263,18 +263,44 @@ function Dashboard() {
 //     });
 // };
 
+// const handleFileChange = async (e) => {
+//   const formData = new FormData();
+//   formData.append("file", e.target.files[0]); // 👈 name must match "file"
+
+//   const res = await fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
+//     method: "POST",
+//     body: formData,
+//     credentials: "include", // if auth cookie is required
+//   });
+
+//   const data = await res.json();
+//   console.log(data);
+// };
+
 const handleFileChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
   const formData = new FormData();
-  formData.append("file", e.target.files[0]); // 👈 name must match "file"
+  formData.append("file", file);
 
-  const res = await fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
-    method: "POST",
-    body: formData,
-    credentials: "include", // if auth cookie is required
-  });
+  // 👇 Get the token from wherever you stored it after login
+  const token = localStorage.getItem("token"); 
 
-  const data = await res.json();
-  console.log(data);
+  try {
+    const res = await fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`, // ✅ this fixes 401
+      },
+    });
+
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.error("Upload error:", err);
+  }
 };
 
 
