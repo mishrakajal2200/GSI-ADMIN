@@ -54,32 +54,32 @@ const salesData = [
 // Sample Data for Recent Orders Table (Expanded for infinite pagination demonstration)
 
 // Sample Data for Recent Activities
-const recentActivities = [
-  {
-    id: 1,
-    type: "Order",
-    description: "New order from Alice Smith",
-    time: "2 hours ago",
-  },
-  {
-    id: 2,
-    type: "User",
-    description: "John Doe updated his profile",
-    time: "5 hours ago",
-  },
-  {
-    id: 3,
-    type: "Product",
-    description: 'Product "Laptop Pro" added to inventory',
-    time: "1 day ago",
-  },
-  {
-    id: 4,
-    type: "Report",
-    description: "Monthly sales report generated",
-    time: "2 days ago",
-  },
-];
+// const recentActivities = [
+//   {
+//     id: 1,
+//     type: "Order",
+//     description: "New order from Alice Smith",
+//     time: "2 hours ago",
+//   },
+//   {
+//     id: 2,
+//     type: "User",
+//     description: "John Doe updated his profile",
+//     time: "5 hours ago",
+//   },
+//   {
+//     id: 3,
+//     type: "Product",
+//     description: 'Product "Laptop Pro" added to inventory',
+//     time: "1 day ago",
+//   },
+//   {
+//     id: 4,
+//     type: "Report",
+//     description: "Monthly sales report generated",
+//     time: "2 days ago",
+//   },
+// ];
 
 function Dashboard() {
   const [newOrdersCount, setNewOrdersCount] = useState(null);
@@ -92,6 +92,7 @@ function Dashboard() {
   const [hasMoreOrders, setHasMoreOrders] = useState(true);
   const [file, setFile] = useState(null);
   const inputRef = useRef(null);
+  const [recentActivities, setRecentActivities] = useState([]);
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
@@ -425,6 +426,35 @@ const handleFileChange = async (e) => {
 
     fetchRecentOrders();
   }, []);
+
+
+  useEffect(() => {
+  const fetchActivities = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const res = await fetch(
+        "https://api.gsienterprises.com/api/getproducts/adminroutes/recent-activities",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await res.json();
+      setRecentActivities(
+        data.map((a) => ({
+          id: a._id,
+          description: a.description,
+          time: new Date(a.createdAt).toLocaleString(),
+        }))
+      );
+    } catch (err) {
+      console.error("Failed to load activities:", err);
+    }
+  };
+
+  fetchActivities();
+}, []);
 
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
@@ -909,6 +939,7 @@ const handleFileChange = async (e) => {
           </a>
         </div>
       </div>
+
     </div>
   </main>
 </div>
