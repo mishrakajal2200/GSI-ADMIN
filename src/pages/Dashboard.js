@@ -284,7 +284,6 @@ const handleFileChange = async (e) => {
   const formData = new FormData();
   formData.append("file", file);
 
-  // 👇 Get the token from wherever you stored it after login
   const token = localStorage.getItem("token");
 
   try {
@@ -294,20 +293,20 @@ const handleFileChange = async (e) => {
         method: "POST",
         body: formData,
         headers: {
-          Authorization: `Bearer ${token}`, // ✅ token is required
-          // ❌ Do NOT set Content-Type manually here; fetch + FormData handles it
+          Authorization: `Bearer ${token}`,
         },
       }
     );
 
+    // ✅ Always read as text first
+    const text = await res.text();
+
+    // Try to parse JSON
     let data;
     try {
-      // Try parsing as JSON
-      data = await res.json();
+      data = JSON.parse(text);
     } catch {
-      // If response isn’t JSON, fall back to plain text (e.g. HTML error page)
-      const text = await res.text();
-      throw new Error(text);
+      data = { error: text }; // fallback if response is not JSON
     }
 
     if (!res.ok) {
