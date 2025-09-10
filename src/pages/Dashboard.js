@@ -285,23 +285,43 @@ const handleFileChange = async (e) => {
   formData.append("file", file);
 
   // 👇 Get the token from wherever you stored it after login
-  const token = localStorage.getItem("token"); 
+  const token = localStorage.getItem("token");
 
   try {
-    const res = await fetch("https://api.gsienterprises.com/api/getproducts/adminroutes/import", {
-      method: "POST",
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`, // ✅ this fixes 401
-      },
-    });
+    const res = await fetch(
+      "https://api.gsienterprises.com/api/getproducts/adminroutes/import",
+      {
+        method: "POST",
+        body: formData,
+        headers: {
+          Authorization: `Bearer ${token}`, // ✅ token is required
+          // ❌ Do NOT set Content-Type manually here; fetch + FormData handles it
+        },
+      }
+    );
 
-    const data = await res.json();
-    console.log(data);
+    let data;
+    try {
+      // Try parsing as JSON
+      data = await res.json();
+    } catch {
+      // If response isn’t JSON, fall back to plain text (e.g. HTML error page)
+      const text = await res.text();
+      throw new Error(text);
+    }
+
+    if (!res.ok) {
+      throw new Error(data.error || "Upload failed");
+    }
+
+    console.log("✅ Imported successfully:", data);
+    alert(`Imported ${data.count} products successfully!`);
   } catch (err) {
-    console.error("Upload error:", err);
+    console.error("❌ Upload error:", err.message || err);
+    alert(`Upload failed: ${err.message || "Unknown error"}`);
   }
 };
+
 
 
   useEffect(() => {
