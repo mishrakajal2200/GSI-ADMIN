@@ -10,7 +10,8 @@ import Analytics from "./pages/Analytics.js"; // ✅ Make sure this exists
 
 import AddProduct from "./pages/AddProduct.js";
 
-import AdminQuotations from "./pages/AdminQuotations.jsx";
+
+import Quotation from "./pages/Quotation.jsx";
 
 function App() {
   return (
@@ -79,7 +80,7 @@ function App() {
           path="/admin/quotation"
           element={
             <AdminRoute>
-              <AdminQuotations />
+              <Quotation />
             </AdminRoute>
           }
         />
