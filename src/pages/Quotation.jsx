@@ -10,7 +10,7 @@ const Quotation = () => {
       const token = localStorage.getItem("token"); // admin token
       const { data } = await axios.get(
         "https://api.gsienterprises.com/api/quotation/all",
-        { headers: { Authorization: `Bearer ${token}` } }
+        { withCredentials: true,headers: { Authorization: `Bearer ${token}` } }
       );
       setQuotations(data);
     } catch (e) {
