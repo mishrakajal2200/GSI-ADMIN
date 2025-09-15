@@ -239,9 +239,15 @@ const ProductList = () => {
   // Helper function to normalize image URLs
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
+
+    // If already a full URL, return it as is
     if (imagePath.startsWith('http')) return imagePath;
-    if (imagePath.startsWith('/')) return `${BACKEND_URL}${imagePath}`;
-    return `${BACKEND_URL}/uploads/${imagePath.split('/').pop()}`;
+
+    // If it contains 'uploads/', just prepend backend URL
+    if (imagePath.includes('uploads/')) return `${BACKEND_URL}/${imagePath}`;
+
+    // Otherwise, assume it's just the filename and prepend uploads folder
+    return `${BACKEND_URL}/uploads/${imagePath}`;
   };
 
   return (
