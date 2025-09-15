@@ -170,24 +170,10 @@ const ProductList = () => {
               {/* Main Image */}
               {product.image && (
                 <img
-                  src={product.image} // full URL from backend
+                  src={product.image} // only main image
                   alt={product.name}
                   className="w-full h-48 object-contain rounded-xl border"
                 />
-              )}
-
-              {/* Additional Images */}
-              {product.images && product.images.length > 0 && (
-                <div className="flex gap-2 flex-wrap mt-2">
-                  {product.images.map((img, idx) => (
-                    <img
-                      key={idx}
-                      src={img} // full URL from backend
-                      alt={`${product.name}-${idx}`}
-                      className="w-24 h-24 object-cover rounded-md shadow"
-                    />
-                  ))}
-                </div>
               )}
 
               {/* Product Info */}
