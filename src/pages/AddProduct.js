@@ -204,7 +204,7 @@ const AddProduct = () => {
     mrp: "",
     description: "",
     image: null,
-    images: [], // multiple images
+    images: [],
   });
 
   // preview states
@@ -217,11 +217,11 @@ const AddProduct = () => {
     if (name === "image") {
       const file = files[0];
       setFormData({ ...formData, image: file });
-      setPreviewImage(URL.createObjectURL(file)); // preview main image
+      setPreviewImage(URL.createObjectURL(file)); // temporary local preview
     } else if (name === "images") {
       const filesArray = Array.from(files);
       setFormData({ ...formData, images: filesArray });
-      setPreviewImages(filesArray.map((file) => URL.createObjectURL(file))); // preview additional images
+      setPreviewImages(filesArray.map((file) => URL.createObjectURL(file)));
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -252,14 +252,27 @@ const AddProduct = () => {
       const token = localStorage.getItem("token");
       const BACKEND_URL = "https://api.gsienterprises.com";
 
-      await axios.post(`${BACKEND_URL}/api/getproducts/adminroutes/create`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        `${BACKEND_URL}/api/getproducts/adminroutes/create`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      const created = res.data.product;
 
       alert("✅ Product added successfully!");
+      console.log("Saved product:", created);
+
+      // ✅ Now show images from server instead of local blobs
+      setPreviewImage(created.image);
+      setPreviewImages(created.images || []);
+
+      // ✅ Optionally redirect after showing previews
       navigate("/admin/products");
     } catch (err) {
       console.error("❌ Add product failed:", err.response?.data || err.message);
