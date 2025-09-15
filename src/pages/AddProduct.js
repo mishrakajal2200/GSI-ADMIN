@@ -194,6 +194,8 @@ import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const navigate = useNavigate();
+  const BACKEND_URL = "https://api.gsienterprises.com";
+
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
@@ -250,7 +252,6 @@ const AddProduct = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const BACKEND_URL = "https://api.gsienterprises.com";
 
       const res = await axios.post(
         `${BACKEND_URL}/api/getproducts/adminroutes/create`,
@@ -264,15 +265,25 @@ const AddProduct = () => {
       );
 
       const created = res.data.product;
-
-      alert("✅ Product added successfully!");
       console.log("Saved product:", created);
+      alert("✅ Product added successfully!");
 
-      // ✅ Now show images from server instead of local blobs
-      setPreviewImage(created.image);
-      setPreviewImages(created.images || []);
+      // ✅ Normalize image URLs
+      if (created.image) {
+        const imgUrl = created.image.startsWith("http")
+          ? created.image
+          : `${BACKEND_URL}/${created.image}`;
+        setPreviewImage(imgUrl);
+      }
 
-      // ✅ Optionally redirect after showing previews
+      if (created.images && created.images.length > 0) {
+        const fixedImages = created.images.map((img) =>
+          img.startsWith("http") ? img : `${BACKEND_URL}/${img}`
+        );
+        setPreviewImages(fixedImages);
+      }
+
+      // ✅ Optionally redirect to product list
       navigate("/admin/products");
     } catch (err) {
       console.error("❌ Add product failed:", err.response?.data || err.message);
@@ -345,11 +356,11 @@ const AddProduct = () => {
               required
               onChange={handleChange}
               className="block w-full text-gray-700 file:mr-4 file:py-2 file:px-4
-              file:rounded-md file:border-0
-              file:text-sm file:font-semibold
-              file:bg-green-600 file:text-white
-              hover:file:bg-green-700
-              focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-green-600 file:text-white
+                hover:file:bg-green-700
+                focus:outline-none focus:ring-2 focus:ring-green-500 transition"
             />
             {/* Preview main image */}
             {previewImage && (
@@ -376,11 +387,11 @@ const AddProduct = () => {
               multiple
               onChange={handleChange}
               className="block w-full text-gray-700 file:mr-4 file:py-2 file:px-4
-              file:rounded-md file:border-0
-              file:text-sm file:font-semibold
-              file:bg-blue-600 file:text-white
-              hover:file:bg-blue-700
-              focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-blue-600 file:text-white
+                hover:file:bg-blue-700
+                focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
             />
             {/* Preview additional images */}
             {previewImages.length > 0 && (
