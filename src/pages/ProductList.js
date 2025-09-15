@@ -221,11 +221,12 @@ const ProductList = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [editProduct, setEditProduct] = useState(null);
+  const BACKEND_URL = 'https://api.gsienterprises.com';
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await axios.get('https://api.gsienterprises.com/api/getproducts/products');
+        const res = await axios.get(`${BACKEND_URL}/api/getproducts/products`);
         setProducts(res.data);
       } catch (err) {
         setError('Failed to fetch products. Please try again later.');
@@ -234,6 +235,14 @@ const ProductList = () => {
     };
     fetchProducts();
   }, []);
+
+  // Helper function to normalize image URLs
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    if (imagePath.startsWith('http')) return imagePath;
+    if (imagePath.startsWith('/')) return `${BACKEND_URL}${imagePath}`;
+    return `${BACKEND_URL}/uploads/${imagePath.split('/').pop()}`;
+  };
 
   return (
     <div className="p-4 md:p-6 max-w-6xl mx-auto">
@@ -278,11 +287,7 @@ const ProductList = () => {
               {/* Main Image */}
               {product.image && (
                 <img
-                  src={
-                    product.image.startsWith('http')
-                      ? product.image // full URL
-                      : `https://api.gsienterprises.com/uploads/${product.image.split('/').pop()}` // relative path fix
-                  }
+                  src={getImageUrl(product.image)} // Use normalized URL
                   alt={product.name}
                   className="w-full h-48 object-contain rounded-xl border"
                 />
