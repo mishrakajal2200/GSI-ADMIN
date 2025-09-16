@@ -93,7 +93,8 @@ function Dashboard() {
   const [file, setFile] = useState(null);
   const inputRef = useRef(null);
   const [recentActivities, setRecentActivities] = useState([]);
-
+ const [notifications, setNotifications] = useState([]);
+ const [isOpen, setIsOpen] = useState(false);
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
     const BACKEND_URL = "https://api.gsienterprises.com";
@@ -411,6 +412,23 @@ const handleFileChange = async (e) => {
   fetchActivities();
 }, []);
 
+
+// Fetch notifications from backend
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const res = await axios.get("https://api.gsienterprises.com/api/notifications");
+        setNotifications(res.data);
+      } catch (err) {
+        console.error("Error fetching notifications:", err);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
+
+  // Unread notifications count (you can store a `read` flag in DB later)
+  const unreadCount = notifications.length;
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 font-sans text-gray-800">
 <aside
@@ -546,12 +564,15 @@ const handleFileChange = async (e) => {
   </button>
       </div>
 
-      <button
+     <button
+        onClick={() => setIsOpen(!isOpen)}
         className="p-2 rounded-full text-gray-600 hover:bg-gray-100 transition-colors duration-200 relative"
         aria-label="Notifications"
       >
         <Bell className="w-6 h-6" />
-        <span className="absolute top-1 right-1 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+        {unreadCount > 0 && (
+          <span className="absolute top-1 right-1 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500"></span>
+        )}
       </button>
       <div className="relative">
         <div
@@ -894,6 +915,32 @@ const handleFileChange = async (e) => {
           </a>
         </div>
       </div>
+
+      {/* notification */}
+      
+    {/* Dropdown */}
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-72 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+          <div className="p-3 border-b">
+            <h4 className="font-semibold text-gray-800">Notifications</h4>
+          </div>
+          <ul className="max-h-60 overflow-y-auto">
+            {notifications.length === 0 ? (
+              <li className="p-3 text-gray-500 text-sm">No new notifications</li>
+            ) : (
+              notifications.map((n, i) => (
+                <li
+                  key={i}
+                  className="p-3 hover:bg-gray-100 text-sm text-gray-700 border-b"
+                >
+                  {n.message}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      )}
+    
 
     </div>
   </main>
