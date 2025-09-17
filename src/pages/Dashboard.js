@@ -51,7 +51,7 @@ const salesData = [
   { name: "Dec", sales: 8000, pv: 6000, amt: 2600 },
 ];
 
-// Sample Data for Recent Orders Table (Expanded for infinite pagination demonstration)
+
 
 // Sample Data for Recent Activities
 // const recentActivities = [
@@ -389,7 +389,7 @@ const handleFileChange = async (e) => {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        "https://api.gsienterprises.com/api/getproducts/adminroutes/recent-activities",
+        "https://api.gsienterprises.com/api/admin/activities/recent",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -943,6 +943,7 @@ const handleFileChange = async (e) => {
     
 
     </div>
+
   </main>
 </div>
     </div>
