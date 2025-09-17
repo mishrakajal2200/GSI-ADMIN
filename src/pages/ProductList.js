@@ -402,7 +402,7 @@ const ProductList = () => {
               {/* Main Image */}
               {product.image && (
                 <img
-                  src={`${BACKEND_URL}/${product.image}`} // ✅ Now backend always sends full URL
+                  src={product.image} // ✅ Now backend always sends full URL
                   alt={product.name}
                   className="w-full h-48 object-contain rounded-xl border"
                 />
