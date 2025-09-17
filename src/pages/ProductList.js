@@ -333,18 +333,18 @@
 
 
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import DeleteProductButton from './DeleteProductButton';
-import EditProductModal from './EditProductModal';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import DeleteProductButton from "./DeleteProductButton";
+import EditProductModal from "./EditProductModal";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [editProduct, setEditProduct] = useState(null);
-  const BACKEND_URL = 'https://api.gsienterprises.com';
+  const BACKEND_URL = "https://api.gsienterprises.com";
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -352,8 +352,8 @@ const ProductList = () => {
         const res = await axios.get(`${BACKEND_URL}/api/getproducts/products`);
         setProducts(res.data);
       } catch (err) {
-        setError('Failed to fetch products. Please try again later.');
-        console.error('Error fetching products:', err);
+        setError("Failed to fetch products. Please try again later.");
+        console.error("Error fetching products:", err);
       }
     };
     fetchProducts();
@@ -367,7 +367,7 @@ const ProductList = () => {
           🛒 <span>Product List</span>
         </h2>
         <button
-          onClick={() => navigate('/admin/products/create')}
+          onClick={() => navigate("/admin/products/create")}
           className="w-full sm:w-auto bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-6 py-2 rounded-xl shadow-md transition text-sm sm:text-base"
         >
           ➕ Add Product
@@ -383,7 +383,9 @@ const ProductList = () => {
           onClose={() => setEditProduct(null)}
           onUpdate={(updatedProduct) =>
             setProducts((prev) =>
-              prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p))
+              prev.map((p) =>
+                p._id === updatedProduct._id ? updatedProduct : p
+              )
             )
           }
         />
@@ -402,17 +404,41 @@ const ProductList = () => {
               {/* Main Image */}
               {product.image && (
                 <img
-                  src={product.image} // ✅ Now backend always sends full URL
+                  src={
+                    product.image.startsWith("http")
+                      ? product.image
+                      : `${BACKEND_URL}/${product.image}`
+                  }
                   alt={product.name}
                   className="w-full h-48 object-contain rounded-xl border"
                 />
               )}
 
+              {/* Additional Images */}
+              {product.images && product.images.length > 0 && (
+                <div className="flex gap-2 flex-wrap mt-2">
+                  {product.images.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={
+                        img.startsWith("http") ? img : `${BACKEND_URL}/${img}`
+                      }
+                      alt={`${product.name} ${idx + 1}`}
+                      className="h-16 w-16 object-cover rounded-md border"
+                    />
+                  ))}
+                </div>
+              )}
+
               {/* Product Info */}
               <div className="flex-1">
-                <h3 className="font-bold text-xl text-gray-800">{product.name}</h3>
+                <h3 className="font-bold text-xl text-gray-800">
+                  {product.name}
+                </h3>
                 <p className="text-sm text-gray-500">{product.brand}</p>
-                <p className="text-green-700 font-semibold mt-1 text-lg">₹{product.price}</p>
+                <p className="text-green-700 font-semibold mt-1 text-lg">
+                  ₹{product.price}
+                </p>
               </div>
 
               {/* Edit/Delete Buttons */}
@@ -426,7 +452,9 @@ const ProductList = () => {
 
                 <DeleteProductButton
                   productId={product._id}
-                  onDelete={() => setProducts(products.filter(p => p._id !== product._id))}
+                  onDelete={() =>
+                    setProducts(products.filter((p) => p._id !== product._id))
+                  }
                 />
               </div>
             </div>
