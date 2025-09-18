@@ -671,6 +671,7 @@ useEffect(() => {
       <Activity className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
     </div>
   </div>
+  
 </div>
 
     {/* Sales Chart, Recent Orders, and Recent Activities */}
