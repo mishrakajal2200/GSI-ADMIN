@@ -829,7 +829,7 @@ const handleFileChange = async (e) => {
                   onChange={(e) => updateStatus(order._id, e.target.value)}
                   className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
                 >
-                  {["new", "processing", "shipped", "delivered", "cancelled"].map(
+                  {["Processing", "Shipped", "Delivered", "Cancelled"].map(
                     (status) => (
                       <option key={status} value={status}>
                         {status}
