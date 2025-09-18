@@ -908,7 +908,7 @@ const handleFileChange = async (e) => {
         </ul>
         <div className="mt-4 sm:mt-6 text-right">
           <a
-            href="dssk" // Use React Router Link or handle navigation
+            href="/admin/activities" // Use React Router Link or handle navigation
             className="text-indigo-600 hover:text-indigo-800 hover:underline font-medium text-sm flex items-center justify-end"
           >
             View All Activities <ChevronRight className="w-4 h-4 ml-1" />
