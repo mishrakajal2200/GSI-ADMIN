@@ -793,58 +793,66 @@ const handleFileChange = async (e) => {
       </thead>
 
       <tbody className="bg-white divide-y divide-gray-100">
-        {loading && allOrders.length === 0 ? (
-          <tr>
-            <td
-              colSpan="4"
-              className="text-center py-6 sm:py-8 text-sm text-gray-500"
-            >
-              Loading orders...
-            </td>
-          </tr>
-        ) : allOrders.length === 0 ? (
-          <tr>
-            <td
-              colSpan="4"
-              className="text-center py-6 text-sm text-gray-500"
-            >
-              No recent orders found.
-            </td>
-          </tr>
-        ) : (
-          allOrders.map((order) => (
-            <tr
-              key={order._id}
-              className="hover:bg-indigo-50 transition-colors duration-150"
-            >
-              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm font-medium text-gray-900">
-                {order._id}
-              </td>
-              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
-                {order.customer}
-              </td>
-              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm">
-                <select
-                  value={order.status}
-                  onChange={(e) => updateStatus(order._id, e.target.value)}
-                  className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
-                >
-                  {["Processing", "Shipped", "Delivered", "Cancelled"].map(
-                    (status) => (
-                      <option key={status} value={status}>
-                        {status}
-                      </option>
-                    )
-                  )}
-                </select>
-              </td>
-              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
-                ₹{order.amount}
-              </td>
-            </tr>
-          ))
-        )}
-      </tbody>
+  {loading && allOrders.length === 0 ? (
+    <tr>
+      <td
+        colSpan="4"
+        className="text-center py-6 sm:py-8 text-sm text-gray-500"
+      >
+        Loading orders...
+      </td>
+    </tr>
+  ) : allOrders.length === 0 ? (
+    <tr>
+      <td
+        colSpan="4"
+        className="text-center py-6 text-sm text-gray-500"
+      >
+        No recent orders found.
+      </td>
+    </tr>
+  ) : (
+    allOrders.map((order) => (
+      <tr
+        key={order._id}
+        className="hover:bg-indigo-50 transition-colors duration-150"
+      >
+        {/* Order ID */}
+        <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm font-medium text-gray-900">
+          {order._id}
+        </td>
+
+        {/* Customer */}
+        <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
+          {order.customer}
+        </td>
+
+        {/* Status dropdown */}
+        <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm">
+          <select
+            value={order.status}
+            onChange={(e) => updateStatus(order._id, e.target.value)}
+            className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
+          >
+            {["new", "processing", "shipped", "delivered", "cancelled"].map(
+              (status) => (
+                <option key={status} value={status}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </option>
+              )
+            )}
+          </select>
+        </td>
+
+        {/* Amount */}
+        <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
+          ₹{order.amount}
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
+
     </table>
   </div>
 
