@@ -766,7 +766,6 @@ const handleFileChange = async (e) => {
       </div>
 
       {/* recent orders */}
-
     <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
       <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
         Recent Orders
@@ -795,29 +794,7 @@ const handleFileChange = async (e) => {
             {loading && allOrders.length === 0 ? (
               <tr>
                 <td colSpan="4" className="text-center py-6 sm:py-8 text-sm text-gray-500">
-                  <div className="flex items-center justify-center space-x-2">
-                    <svg
-                      className="animate-spin h-5 w-5 text-indigo-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                      ></path>
-                    </svg>
-                    <span>Loading orders...</span>
-                  </div>
+                  Loading orders...
                 </td>
               </tr>
             ) : allOrders.length === 0 ? (
@@ -830,21 +807,15 @@ const handleFileChange = async (e) => {
               allOrders.map((order) => (
                 <tr key={order._id} className="hover:bg-indigo-50 transition-colors duration-150">
                   <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm font-medium text-gray-900">
-                    {order._id ? order._id : <span className="text-gray-400">Loading...</span>}
+                    {order._id}
                   </td>
                   <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
-                    {order.customer || order.user?.name || "N/A"}
+                    {order.customer}
                   </td>
                   <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm">
                     <select
                       value={order.status}
-                      onChange={(e) => {
-                        if (order._id) {
-                          updateStatus(order._id, e.target.value);
-                        } else {
-                          console.error("❌ order._id is undefined", order);
-                        }
-                      }}
+                      onChange={(e) => updateStatus(order._id, e.target.value)}
                       className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
                     >
                       {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
@@ -855,7 +826,7 @@ const handleFileChange = async (e) => {
                     </select>
                   </td>
                   <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
-                    ₹{order.amount || order.totalPrice || "N/A"}
+                    ₹{order.amount}
                   </td>
                 </tr>
               ))
@@ -864,7 +835,6 @@ const handleFileChange = async (e) => {
         </table>
       </div>
 
-      {/* Load More Button */}
       {hasMoreOrders && !loading && (
         <div className="mt-4 sm:mt-6 text-center">
           <button
