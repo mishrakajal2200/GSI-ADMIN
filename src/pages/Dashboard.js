@@ -95,6 +95,7 @@ function Dashboard() {
   const [recentActivities, setRecentActivities] = useState([]);
  const [notifications, setNotifications] = useState([]);
  const [isOpen, setIsOpen] = useState(false);
+
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
     const BACKEND_URL = "https://api.gsienterprises.com";
@@ -766,92 +767,105 @@ const handleFileChange = async (e) => {
       </div>
 
       {/* recent orders */}
-    <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
-      <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
-        Recent Orders
-      </h3>
+   {/* recent orders */}
+<div className="bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
+  <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 sm:mb-6">
+    Recent Orders
+  </h3>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50 border-b border-gray-200">
-            <tr>
-              <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-xl">
-                Order ID
-              </th>
-              <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Customer
-              </th>
-              <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-xl">
-                Amount
-              </th>
+  <div className="overflow-x-auto">
+    <table className="min-w-full divide-y divide-gray-200">
+      <thead className="bg-gray-50 border-b border-gray-200">
+        <tr>
+          <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-xl">
+            Order ID
+          </th>
+          <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Customer
+          </th>
+          <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+            Status
+          </th>
+          <th className="px-3 py-2 sm:px-4 sm:py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tr-xl">
+            Amount
+          </th>
+        </tr>
+      </thead>
+
+      <tbody className="bg-white divide-y divide-gray-100">
+        {loading && allOrders.length === 0 ? (
+          <tr>
+            <td
+              colSpan="4"
+              className="text-center py-6 sm:py-8 text-sm text-gray-500"
+            >
+              Loading orders...
+            </td>
+          </tr>
+        ) : allOrders.length === 0 ? (
+          <tr>
+            <td
+              colSpan="4"
+              className="text-center py-6 text-sm text-gray-500"
+            >
+              No recent orders found.
+            </td>
+          </tr>
+        ) : (
+          allOrders.map((order) => (
+            <tr
+              key={order._id}
+              className="hover:bg-indigo-50 transition-colors duration-150"
+            >
+              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm font-medium text-gray-900">
+                {order._id}
+              </td>
+              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
+                {order.customer}
+              </td>
+              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm">
+                <select
+                  value={order.status}
+                  onChange={(e) => updateStatus(order._id, e.target.value)}
+                  className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
+                >
+                  {["new", "processing", "shipped", "delivered", "cancelled"].map(
+                    (status) => (
+                      <option key={status} value={status}>
+                        {status}
+                      </option>
+                    )
+                  )}
+                </select>
+              </td>
+              <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
+                ₹{order.amount}
+              </td>
             </tr>
-          </thead>
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
 
-          <tbody className="bg-white divide-y divide-gray-100">
-            {loading && allOrders.length === 0 ? (
-              <tr>
-                <td colSpan="4" className="text-center py-6 sm:py-8 text-sm text-gray-500">
-                  Loading orders...
-                </td>
-              </tr>
-            ) : allOrders.length === 0 ? (
-              <tr>
-                <td colSpan="4" className="text-center py-6 text-sm text-gray-500">
-                  No recent orders found.
-                </td>
-              </tr>
-            ) : (
-              allOrders.map((order) => (
-                <tr key={order._id} className="hover:bg-indigo-50 transition-colors duration-150">
-                  <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm font-medium text-gray-900">
-                    {order._id}
-                  </td>
-                  <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
-                    {order.customer}
-                  </td>
-                  <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm">
-                    <select
-                      value={order.status}
-                      onChange={(e) => updateStatus(order._id, e.target.value)}
-                      className="px-2 py-1 text-sm rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-800"
-                    >
-                      {["Pending", "Processing", "Shipped", "Completed"].map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td className="px-3 py-2 sm:px-4 sm:py-3 text-sm text-gray-700">
-                    ₹{order.amount}
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {hasMoreOrders && !loading && (
-        <div className="mt-4 sm:mt-6 text-center">
-          <button
-            onClick={handleLoadMore}
-            className="px-5 py-2 sm:px-6 sm:py-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-full shadow-md hover:from-indigo-600 hover:to-blue-700 transition-colors duration-200 text-sm font-semibold"
-          >
-            Load More Orders
-          </button>
-        </div>
-      )}
-
-      {!hasMoreOrders && allOrders.length > 0 && (
-        <div className="mt-4 sm:mt-6 text-center text-gray-600 text-xs sm:text-sm py-2 px-4 bg-gray-50 rounded-full inline-block">
-          ✨ All caught up! No more orders to load.
-        </div>
-      )}
+  {hasMoreOrders && !loading && (
+    <div className="mt-4 sm:mt-6 text-center">
+      <button
+        onClick={handleLoadMore}
+        className="px-5 py-2 sm:px-6 sm:py-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-full shadow-md hover:from-indigo-600 hover:to-blue-700 transition-colors duration-200 text-sm font-semibold"
+      >
+        Load More Orders
+      </button>
     </div>
+  )}
+
+  {!hasMoreOrders && allOrders.length > 0 && (
+    <div className="mt-4 sm:mt-6 text-center text-gray-600 text-xs sm:text-sm py-2 px-4 bg-gray-50 rounded-full inline-block">
+      ✨ All caught up! No more orders to load.
+    </div>
+  )}
+</div>
+
 
       {/* Recent Activities */}
       <div className="lg:col-span-1 bg-white p-5 sm:p-6 rounded-3xl shadow-xl border border-gray-100">
