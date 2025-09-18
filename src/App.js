@@ -12,6 +12,7 @@ import AddProduct from "./pages/AddProduct.js";
 
 
 import Quotation from "./pages/Quotation.jsx";
+import AllActivities from "./pages/AllActivities.js";
 
 function App() {
   return (
@@ -81,6 +82,16 @@ function App() {
           element={
             <AdminRoute>
               <Quotation />
+            </AdminRoute>
+          }
+        />
+
+
+        <Route
+          path="/admin/activities"
+          element={
+            <AdminRoute>
+              <AllActivities />
             </AdminRoute>
           }
         />
