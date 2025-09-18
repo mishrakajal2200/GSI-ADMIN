@@ -35,51 +35,9 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// Sample Data for the Chart
-const salesData = [
-  { name: "Jan", sales: 4000, pv: 2400, amt: 2400 },
-  { name: "Feb", sales: 3000, pv: 1398, amt: 2210 },
-  { name: "Mar", sales: 5000, pv: 9800, amt: 2290 },
-  { name: "Apr", sales: 4500, pv: 3908, amt: 2000 },
-  { name: "May", sales: 6000, pv: 4800, amt: 2181 },
-  { name: "Jun", sales: 5500, pv: 3800, amt: 2500 },
-  { name: "Jul", sales: 6200, pv: 4300, amt: 2100 },
-  { name: "Aug", sales: 5800, pv: 4500, amt: 2300 },
-  { name: "Sep", sales: 7000, pv: 5000, amt: 2400 },
-  { name: "Oct", sales: 6500, pv: 4700, amt: 2200 },
-  { name: "Nov", sales: 7200, pv: 5200, amt: 2500 },
-  { name: "Dec", sales: 8000, pv: 6000, amt: 2600 },
-];
 
 
 
-// Sample Data for Recent Activities
-// const recentActivities = [
-//   {
-//     id: 1,
-//     type: "Order",
-//     description: "New order from Alice Smith",
-//     time: "2 hours ago",
-//   },
-//   {
-//     id: 2,
-//     type: "User",
-//     description: "John Doe updated his profile",
-//     time: "5 hours ago",
-//   },
-//   {
-//     id: 3,
-//     type: "Product",
-//     description: 'Product "Laptop Pro" added to inventory',
-//     time: "1 day ago",
-//   },
-//   {
-//     id: 4,
-//     type: "Report",
-//     description: "Monthly sales report generated",
-//     time: "2 days ago",
-//   },
-// ];
 
 function Dashboard() {
   const [newOrdersCount, setNewOrdersCount] = useState(null);
@@ -95,6 +53,7 @@ function Dashboard() {
   const [recentActivities, setRecentActivities] = useState([]);
  const [notifications, setNotifications] = useState([]);
  const [isOpen, setIsOpen] = useState(false);
+ const [salesData, setSalesData] = useState([]);
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
@@ -411,6 +370,26 @@ const handleFileChange = async (e) => {
   };
 
   fetchActivities();
+}, []);
+
+
+useEffect(() => {
+  const fetchSales = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("https://api.gsienterprises.com/api/admin/sales/monthly", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.json();
+      setSalesData(data);
+    } catch (err) {
+      console.error("Error fetching sales data", err);
+    }
+  };
+
+  fetchSales();
 }, []);
 
 
