@@ -9,7 +9,7 @@ const AdminQuotationActions = ({ quotation, onUpdate }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `https://api.gsienterprises.com/api/quotation/${quotation._id}/respond`,
+        `https://gsienterprises.com/api/quotation/${quotation._id}/respond`,
         {
           quotedPrice,
           validityDate,

@@ -9,7 +9,7 @@ const Analytics = () => {
     const fetchAnalytics = async () => {
       try {
         const token = localStorage.getItem("token");
-        const BACKEND_URL = "https://api.gsienterprises.com";
+        const BACKEND_URL = "https://gsienterprises.com";
         const response = await axios.get(`${BACKEND_URL}/api/auth`,{
       headers: {
         Authorization: `Bearer ${token}`,

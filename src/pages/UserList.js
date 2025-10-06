@@ -13,7 +13,7 @@ const UserList = () => {
   const [ setUserToDelete] = useState(null);
 
 
-  const BACKEND_URL = 'https://api.gsienterprises.com/api/auth';
+  const BACKEND_URL = 'https://gsienterprises.com/api/auth';
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -59,7 +59,7 @@ const handleDelete = async (id) => {
 
 
   try {
-    await axios.delete(`https://api.gsienterprises.com/api/auth/user/${id}`, {
+    await axios.delete(`https://gsienterprises.com/api/auth/user/${id}`, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },

@@ -344,7 +344,7 @@ const ProductList = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [editProduct, setEditProduct] = useState(null);
-  const BACKEND_URL = 'https://api.gsienterprises.com';
+  const BACKEND_URL = 'https://gsienterprises.com';
 
   useEffect(() => {
     const fetchProducts = async () => {

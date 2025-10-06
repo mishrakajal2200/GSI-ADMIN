@@ -10,7 +10,7 @@ const AdminSubscribers = () => {
   useEffect(() => {
     const fetchSubscribers = async () => {
       try {
-        const res = await axios.get('https://api.gsienterprises.com/api/subs/all');
+        const res = await axios.get('https://gsienterprises.com/api/subs/all');
         setSubscribers(res.data);
         setLoading(false);
       } catch (err) {

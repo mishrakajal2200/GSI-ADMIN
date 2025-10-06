@@ -11,7 +11,7 @@ const Quotation = () => {
     try {
       const token = localStorage.getItem("token"); // admin token
       const { data } = await axios.get(
-        "https://api.gsienterprises.com/api/quotation/all",
+        "https://gsienterprises.com/api/quotation/all",
         {
           withCredentials: true,
           headers: { Authorization: `Bearer ${token}` },

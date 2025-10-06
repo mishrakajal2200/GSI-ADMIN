@@ -57,7 +57,7 @@ function Dashboard() {
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 1;
-    const BACKEND_URL = "https://api.gsienterprises.com";
+    const BACKEND_URL = "https://gsienterprises.com";
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
@@ -106,7 +106,7 @@ function Dashboard() {
   const updateStatus = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem("token");
-      const BACKEND_URL = "https://api.gsienterprises.com";
+      const BACKEND_URL = "https://gsienterprises.com";
 
       const res = await fetch(
         `${BACKEND_URL}/api/admin/orders/${orderId}/status`,
@@ -138,7 +138,7 @@ function Dashboard() {
 
     try {
       const res = await fetch(
-        "https://api.gsienterprises.com/api/getproducts/adminroutes/export",
+        "https://gsienterprises.com/api/getproducts/adminroutes/export",
         {
           method: "GET",
           headers: {
@@ -176,7 +176,7 @@ function Dashboard() {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        `https://api.gsienterprises.com/api/getproducts/adminroutes/import`,
+        `https://gsienterprises.com/api/getproducts/adminroutes/import`,
         formData,
         {
           headers: {
@@ -205,7 +205,7 @@ const handleFileChange = async (e) => {
 
   try {
     const res = await fetch(
-      "https://api.gsienterprises.com/api/getproducts/adminroutes/import",
+      "https://gsienterprises.com/api/getproducts/adminroutes/import",
       {
         method: "POST",
         body: formData,
@@ -254,7 +254,7 @@ const handleFileChange = async (e) => {
         // grab the token you stored at login
         const token = localStorage.getItem("token");
         const res = await axios.get(
-          "https://api.gsienterprises.com/api/payment/count",
+          "https://gsienterprises.com/api/payment/count",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -274,7 +274,7 @@ const handleFileChange = async (e) => {
     const fetchStats = async () => {
       try {
         const token = localStorage.getItem("token");
-        const BACKEND_URL = "https://api.gsienterprises.com";
+        const BACKEND_URL = "https://gsienterprises.com";
 
         const res = await axios.get(`${BACKEND_URL}/api/admin/stats`, {
           headers: {
@@ -297,7 +297,7 @@ const handleFileChange = async (e) => {
       try {
         const token = localStorage.getItem("token"); // or however you store it
         const response = await axios.get(
-          "https://api.gsienterprises.com/api/payment/all-orders",
+          "https://gsienterprises.com/api/payment/all-orders",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -319,7 +319,7 @@ const handleFileChange = async (e) => {
     const fetchRecentOrders = async () => {
       try {
         const token = localStorage.getItem("token");
-        const BACKEND_URL = "https://api.gsienterprises.com";
+        const BACKEND_URL = "https://gsienterprises.com";
 
         const res = await axios.get(
           `${BACKEND_URL}/api/admin/orders/recent?page=1`,
@@ -349,7 +349,7 @@ const handleFileChange = async (e) => {
     const token = localStorage.getItem("token");
     try {
       const res = await fetch(
-        "https://api.gsienterprises.com/api/admin/activities/recent",
+        "https://gsienterprises.com/api/admin/activities/recent",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -377,7 +377,7 @@ useEffect(() => {
   const fetchSales = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("https://api.gsienterprises.com/api/admin/sales/monthly", {
+      const res = await fetch("https://gsienterprises.com/api/admin/sales/monthly", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -397,7 +397,7 @@ useEffect(() => {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const res = await axios.get("https://api.gsienterprises.com/api/notifications");
+        const res = await axios.get("https://gsienterprises.com/api/notifications");
         setNotifications(res.data);
       } catch (err) {
         console.error("Error fetching notifications:", err);

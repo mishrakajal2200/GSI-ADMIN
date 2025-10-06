@@ -194,7 +194,7 @@ import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
   const navigate = useNavigate();
-  const BACKEND_URL = "https://api.gsienterprises.com";
+  const BACKEND_URL = "https://gsienterprises.com";
 
   const [formData, setFormData] = useState({
     name: "",

@@ -7,7 +7,7 @@ export default function AllActivities() {
 
   useEffect(() => {
     axios
-      .get("https://api.gsienterprises.com/api/admin/activities/recent", {
+      .get("https://gsienterprises.com/api/admin/activities/recent", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => setActivities(res.data))
